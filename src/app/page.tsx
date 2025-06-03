@@ -43,11 +43,20 @@ export default function HomePage() {
     );
   }
 
-  // Get featured posts (first 3 posts)
-  const featuredPosts = posts.slice(0, 3);
+  // Get featured posts (first 6 posts)
+  const featuredPosts = posts.slice(0, 6);
+  
+  // Get random posts for "For You" section (exclude featured posts)
+  const getRandomPosts = (count: number) => {
+    const availablePosts = posts.slice(6); // Exclude featured posts
+    const shuffled = [...availablePosts].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+  };
+  
+  const forYouPosts = getRandomPosts(6);
   
   // Get posts by category for sections
-  const getPostsByCategory = (categoryName: string, limit: number = 4) => {
+  const getPostsByCategory = (categoryName: string, limit: number = 3) => {
     return posts.filter(post => post.categoryName === categoryName).slice(0, limit);
   };
 
@@ -64,6 +73,22 @@ export default function HomePage() {
             <h2 className={styles.sectionTitle}>Featured Articles</h2>
             <div className={styles.featuredGrid}>
               {featuredPosts.map((post) => (
+                <PostCard 
+                  key={post.id} 
+                  post={post} 
+                  variant="featured"
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* For You Section */}
+        <section className={styles.section}>
+          <div className={styles.container}>
+            <h2 className={styles.sectionTitle}>For You</h2>
+            <div className={styles.featuredGrid}>
+              {forYouPosts.map((post) => (
                 <PostCard 
                   key={post.id} 
                   post={post} 
@@ -102,20 +127,28 @@ export default function HomePage() {
           );
         })}
 
-        {/* Newsletter Section */}
+        {/* Search Section */}
         <section className={styles.newsletter}>
           <div className={styles.container}>
             <div className={styles.newsletterContent}>
-              <h2>Stay Updated with Smart Buy Radar</h2>
-              <p>Get the latest deals, reviews, and shopping tips delivered to your inbox.</p>
-              <form className={styles.newsletterForm}>
+              <h2>Search Smart Buy Radar</h2>
+              <p>Find the product reviews, shopping tips, and deals you need</p>
+              <form className={styles.newsletterForm} onSubmit={(e) => {
+                e.preventDefault()
+                const formData = new FormData(e.target as HTMLFormElement)
+                const query = formData.get('search') as string
+                if (query.trim()) {
+                  window.location.href = `/search?q=${encodeURIComponent(query.trim())}`
+                }
+              }}>
                 <input 
-                  type="email" 
-                  placeholder="Enter your email address"
+                  type="text" 
+                  name="search"
+                  placeholder="Enter search keywords"
                   className={styles.emailInput}
                 />
                 <button type="submit" className={styles.subscribeBtn}>
-                  Subscribe
+                  Search
                 </button>
               </form>
             </div>

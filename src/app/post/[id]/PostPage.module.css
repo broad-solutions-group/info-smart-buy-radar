@@ -58,14 +58,23 @@
   color: #0056b3;
 }
 
+/* 容器设置 - 与首页保持一致 */
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-.article {
+/* 两栏布局容器 */
+.contentWrapper {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 3rem;
   padding: 2rem 0;
+}
+
+.article {
+  min-width: 0; /* 防止内容溢出 */
 }
 
 .articleHeader {
@@ -208,27 +217,35 @@
   font-size: 0.9rem;
 }
 
-.relatedSection {
-  background-color: #f8f9fa;
-  padding: 3rem 0;
-}
-
-.relatedTitle {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  color: #1a1a1a;
-  text-align: center;
-}
-
-.relatedGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
 /* 响应式设计 */
+@media (max-width: 1024px) {
+  .contentWrapper {
+    grid-template-columns: 1fr 280px;
+    gap: 2rem;
+  }
+  
+  .title {
+    font-size: 2.25rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .contentWrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .article {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
   .title {
     font-size: 2rem;
   }
@@ -245,10 +262,6 @@
     flex-direction: column;
     gap: 0.5rem;
   }
-  
-  .relatedGrid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 480px) {
@@ -260,7 +273,12 @@
     padding: 0 0.75rem;
   }
   
+  .contentWrapper {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+  
   .article {
-    padding: 1rem 0;
+    padding: 1rem;
   }
 } 

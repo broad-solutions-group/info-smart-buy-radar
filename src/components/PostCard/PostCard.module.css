@@ -116,7 +116,6 @@
 
 /* Featured variant */
 .featured {
-  grid-column: span 2;
 }
 
 .featured .imageContainer {
@@ -166,10 +165,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .featured {
-    grid-column: span 1;
-  }
-  
   .featured .imageContainer {
     height: 200px;
   }

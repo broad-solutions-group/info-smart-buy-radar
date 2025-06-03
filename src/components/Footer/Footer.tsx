@@ -41,27 +41,6 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          
-          <div className={styles.footerSection}>
-            <h4 className={styles.sectionTitle}>Quick Links</h4>
-            <ul className={styles.footerLinks}>
-              <li>
-                <Link href="/" className={styles.footerLink}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/search" className={styles.footerLink}>
-                  Search
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className={styles.footerLink}>
-                  About Us
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
         
         <div className={styles.footerBottom}>

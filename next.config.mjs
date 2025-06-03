@@ -6,7 +6,6 @@ const nextConfig = {
     unoptimized: true,
     domains: ['cdn-info.broadsolutionsgroup.com'],
   },
-  cssModules: true,
   experimental: {
     esmExternals: false,
   },
