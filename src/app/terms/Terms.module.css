@@ -1,107 +1,164 @@
 .main {
   min-height: 100vh;
   padding: 2rem 0;
-  background-color: #f8f9fa;
+  background: #f8f9fa;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-.article {
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+.contentGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  align-items: start;
 }
 
-.header {
-  background-color: #1a1a1a;
-  color: white;
-  padding: 2rem;
-  text-align: center;
+.contentMain {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-.title {
+.contentBody {
+  line-height: 1.7;
+  color: #374151;
+}
+
+.contentBody h1 {
+  color: #1f2937;
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin: 0 0 2rem;
+  border-bottom: 3px solid #4338ca;
+  padding-bottom: 0.75rem;
 }
 
-.lastUpdated {
-  font-size: 1rem;
-  opacity: 0.8;
-  margin: 0;
-}
-
-.content {
-  padding: 2rem;
-}
-
-.section {
-  margin-bottom: 2rem;
-}
-
-.section:last-child {
-  margin-bottom: 0;
-}
-
-.section h2 {
+.contentBody h2 {
+  color: #1f2937;
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1rem;
-  color: #1a1a1a;
+  margin: 2rem 0 1rem;
+  counter-increment: section;
 }
 
-.section p {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #4a5568;
-  margin-bottom: 1rem;
+.contentBody h2::before {
+  content: counter(section) ". ";
+  color: #4338ca;
+  font-weight: 700;
 }
 
-.section ul {
-  margin: 1rem 0;
-  padding-left: 2rem;
+.contentBody h3 {
+  color: #1f2937;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
 }
 
-.section li {
-  margin-bottom: 0.5rem;
-  color: #4a5568;
+.contentBody p {
+  margin-bottom: 1.25rem;
+  text-align: justify;
+}
+
+.contentBody ul {
+  margin: 1rem 0 1.5rem 1.5rem;
+}
+
+.contentBody ol {
+  margin: 1rem 0 1.5rem 1.5rem;
+  counter-reset: item;
+}
+
+.contentBody li {
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.contentBody ul li::marker {
+  color: #4338ca;
+}
+
+.contentBody ol li {
+  counter-increment: item;
+}
+
+.contentBody ol li::marker {
+  color: #4338ca;
+  font-weight: 600;
+}
+
+.contentBody strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.contentSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebarCard {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #4338ca;
+}
+
+.sidebarCard h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+}
+
+.sidebarCard p {
+  color: #6b7280;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
-/* 响应式设计 */
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .contentMain {
+    padding: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
-  .title {
+  .main {
+    padding: 1rem 0;
+  }
+  
+  .contentMain {
+    padding: 1.5rem;
+  }
+  
+  .sidebarCard {
+    padding: 1.5rem;
+  }
+  
+  .contentBody h1 {
     font-size: 2rem;
   }
   
-  .header {
-    padding: 1.5rem;
-  }
-  
-  .content {
-    padding: 1.5rem;
-  }
-  
-  .section h2 {
+  .contentBody h2 {
     font-size: 1.25rem;
   }
 }
 
 @media (max-width: 480px) {
-  .main {
-    padding: 1rem 0;
-  }
-  
-  .title {
+  .contentBody h1 {
     font-size: 1.75rem;
-  }
-  
-  .content {
-    padding: 1rem;
   }
 } 

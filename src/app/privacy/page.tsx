@@ -35,17 +35,28 @@ export default function PrivacyPage() {
       <Header categories={categories} />
       <main className={styles.main}>
         <div className={styles.container}>
-          <article className={styles.article}>
-            <header className={styles.header}>
-              <h1 className={styles.title}>Privacy Policy</h1>
-              <p className={styles.subtitle}>How we collect, use, and protect your information</p>
-            </header>
-
-            <div 
-              className={styles.content}
-              dangerouslySetInnerHTML={{ __html: privacyContent }}
-            />
-          </article>
+          <div className={styles.contentGrid}>
+            <div className={styles.contentMain}>
+              <div 
+                className={styles.contentBody}
+                dangerouslySetInnerHTML={{ __html: privacyContent }}
+              />
+            </div>
+            <div className={styles.contentSidebar}>
+              <div className={styles.sidebarCard}>
+                <h3>Data Protection</h3>
+                <p>We implement industry-standard security measures to protect your personal information.</p>
+              </div>
+              <div className={styles.sidebarCard}>
+                <h3>Your Rights</h3>
+                <p>You have the right to access, update, or delete your personal information at any time.</p>
+              </div>
+              <div className={styles.sidebarCard}>
+                <h3>Contact Us</h3>
+                <p>Have privacy concerns? We are committed to addressing any questions you may have.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <Footer />

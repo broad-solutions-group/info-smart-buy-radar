@@ -35,17 +35,28 @@ export default function TermsPage() {
       <Header categories={categories} />
       <main className={styles.main}>
         <div className={styles.container}>
-          <article className={styles.article}>
-            <header className={styles.header}>
-              <h1 className={styles.title}>Terms of Service</h1>
-              <p className={styles.subtitle}>Please read these terms carefully before using our services</p>
-            </header>
-
-            <div 
-              className={styles.content}
-              dangerouslySetInnerHTML={{ __html: termsContent }}
-            />
-          </article>
+          <div className={styles.contentGrid}>
+            <div className={styles.contentMain}>
+              <div 
+                className={styles.contentBody}
+                dangerouslySetInnerHTML={{ __html: termsContent }}
+              />
+            </div>
+            <div className={styles.contentSidebar}>
+              <div className={styles.sidebarCard}>
+                <h3>Quick Summary</h3>
+                <p>These terms outline your rights and responsibilities when using Smart Buy Radar.</p>
+              </div>
+              <div className={styles.sidebarCard}>
+                <h3>Last Updated</h3>
+                <p>Our terms are regularly reviewed and updated to ensure they remain current and fair.</p>
+              </div>
+              <div className={styles.sidebarCard}>
+                <h3>Questions?</h3>
+                <p>If you have any questions about these terms, please don&apos;t hesitate to contact us.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <Footer />
