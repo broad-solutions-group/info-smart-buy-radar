@@ -1,6 +1,6 @@
 {
   "name": "info-smart-buy-radar",
-  "description": "Smart Buy Radar - 全英资讯网站，基于 Next.js + Redux + CSS Modules + SSG",
+  "description": "Smart Buy Radar",
   "cloudflare": {
     "label": "Smart Buy Radar",
     "products": [
