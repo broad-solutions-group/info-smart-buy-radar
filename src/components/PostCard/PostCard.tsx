@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import styles from './PostCard.module.css'
 import { Post } from '../../lib/slices/postsSlice'
 
@@ -9,6 +10,8 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post, variant = 'default' }: PostCardProps) {
+  const router = useRouter()
+  
   const getCategorySlug = (categoryName: string) => {
     return categoryName.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')
   }
@@ -22,9 +25,18 @@ export default function PostCard({ post, variant = 'default' }: PostCardProps) {
     })
   }
 
+  const handlePostClick = () => {
+    router.push(`/post/${post.id}`)
+  }
+
+  const handleCategoryClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    router.push(`/category/${getCategorySlug(post.categoryName)}`)
+  }
+
   return (
     <article className={`${styles.postCard} ${styles[variant]}`}>
-      <Link href={`/post/${post.id}`} className={styles.cardLink}>
+      <div className={styles.cardLink} onClick={handlePostClick}>
         <div className={styles.imageContainer}>
           <Image
             src={`https://${post.imageUrl}`}
@@ -33,13 +45,12 @@ export default function PostCard({ post, variant = 'default' }: PostCardProps) {
             className={styles.postImage}
           />
           <div className={styles.categoryBadge}>
-            <Link 
-              href={`/category/${getCategorySlug(post.categoryName)}`}
+            <span 
               className={styles.categoryLink}
-              onClick={(e) => e.stopPropagation()}
+              onClick={handleCategoryClick}
             >
               {post.categoryName}
-            </Link>
+            </span>
           </div>
         </div>
         
@@ -52,7 +63,7 @@ export default function PostCard({ post, variant = 'default' }: PostCardProps) {
             <span className={styles.readTime}>{post.duration} read</span>
           </div>
         </div>
-      </Link>
+      </div>
     </article>
   )
 } 

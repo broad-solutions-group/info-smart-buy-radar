@@ -17,6 +17,7 @@
   text-decoration: none;
   color: inherit;
   height: 100%;
+  cursor: pointer;
 }
 
 .cardLink:hover {
@@ -56,6 +57,8 @@
   font-weight: 600;
   text-decoration: none;
   transition: background-color 0.2s ease;
+  cursor: pointer;
+  display: inline-block;
 }
 
 .categoryLink:hover {
