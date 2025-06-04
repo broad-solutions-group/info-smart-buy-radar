@@ -81,7 +81,7 @@
 .slideInfo {
   max-width: 600px;
   color: white;
-  margin-left: 80px;
+  margin-left: 4rem;
 }
 
 .categoryTag {
@@ -156,13 +156,14 @@
   font-weight: 500;
 }
 
-/* 导航箭头 - 移除圆形背景，优化定位 */
+/* 导航箭头 - 与主体内容宽度对齐 */
 .navArrows {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   padding: 0 1rem;
@@ -252,7 +253,7 @@
 /* 大屏幕优化 */
 @media (min-width: 1024px) {
   .navArrows {
-    padding: 0 2rem;
+    max-width: 1200px;
   }
   
   .navArrow svg {
@@ -261,13 +262,42 @@
   }
   
   .slideInfo {
-    margin-left: 0;
+    margin-left: 4.5rem;
+  }
+}
+
+/* 中等屏幕优化 (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navArrows {
+    max-width: 1000px;
+  }
+  
+  .navArrow svg {
+    width: 34px;
+    height: 34px;
+  }
+  
+  .slideInfo {
+    margin-left: 4rem;
+    max-width: 500px;
+  }
+  
+  .slideTitle {
+    font-size: 2rem;
+  }
+  
+  .slideDescription {
+    font-size: 0.95rem;
+  }
+  
+  .textContent {
+    padding: 1.75rem 0;
   }
 }
 
 @media (min-width: 1200px) {
   .navArrows {
-    padding: 0 3rem;
+    max-width: 1200px;
   }
   
   .navArrow svg {
@@ -276,7 +306,23 @@
   }
   
   .slideInfo {
-    margin-left: 0;
+    margin-left: 5rem;
+  }
+}
+
+/* 超大屏幕优化 */
+@media (min-width: 1400px) {
+  .navArrows {
+    max-width: 1200px;
+  }
+  
+  .navArrow svg {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .slideInfo {
+    margin-left: 5.5rem;
   }
 }
 
