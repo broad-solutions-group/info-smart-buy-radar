@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { Post, Category } from '@/lib/slices/postsSlice';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
@@ -27,7 +26,7 @@ export default function CategoryPageClient({
         <div className={styles.notFound}>
           <h1>Category Not Found</h1>
           <p>Sorry, we couldn&apos;t find any articles in this category.</p>
-          <Link href="/" className={styles.backHome}>← Back to Home</Link>
+          <a href="/" className={styles.backHome}>← Back to Home</a>
         </div>
         <Footer />
       </>
@@ -42,7 +41,7 @@ export default function CategoryPageClient({
           {/* Category Header */}
           <header className={styles.header}>
             <nav className={styles.breadcrumb}>
-              <Link href="/">Home</Link>
+              <a href="/">Home</a>
               <span className={styles.separator}>›</span>
               <span>{categoryName}</span>
             </nav>

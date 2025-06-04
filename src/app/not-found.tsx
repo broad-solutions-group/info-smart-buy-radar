@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { getCategories } from '@/lib/api';
 import { Category } from '@/lib/slices/postsSlice';
 import Header from '@/components/Header/Header';
@@ -34,22 +33,22 @@ export default function NotFound() {
             </p>
             
             <div className={styles.actions}>
-              <Link href="/" className={styles.homeButton}>
+              <a href="/" className={styles.homeButton}>
                 ← Back to Home
-              </Link>
-              <Link href="/search" className={styles.searchButton}>
+              </a>
+              <a href="/search" className={styles.searchButton}>
                 Search Articles
-              </Link>
+              </a>
             </div>
             
             <div className={styles.suggestions}>
               <h2 className={styles.suggestionsTitle}>You might want to try:</h2>
               <ul className={styles.suggestionsList}>
                 <li>
-                  <Link href="/">Browse our latest articles</Link>
+                  <a href="/">Browse our latest articles</a>
                 </li>
                 <li>
-                  <Link href="/search">Search for specific topics</Link>
+                  <a href="/search">Search for specific topics</a>
                 </li>
                 <li>Check the URL for typos</li>
                 <li>Use the navigation menu above</li>
@@ -61,13 +60,13 @@ export default function NotFound() {
                 <h3 className={styles.categoriesTitle}>Browse by Category</h3>
                 <div className={styles.categoriesGrid}>
                   {categories.map((category) => (
-                    <Link 
+                    <a 
                       key={category.id}
                       href={`/category/${category.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}`}
                       className={styles.categoryLink}
                     >
                       {category.name}
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { getAllPosts, getCategories } from '@/lib/api';
 import { Post, Category } from '@/lib/slices/postsSlice';
 import Header from '@/components/Header/Header';
@@ -117,9 +116,9 @@ export default function HomePage() {
               <div className={styles.container}>
                 <div className={styles.sectionHeader}>
                   <h2 className={styles.sectionTitle}>{category.name}</h2>
-                  <Link href={`/category/${category.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}`} className={styles.viewAll}>
+                  <a href={`/category/${category.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}`} className={styles.viewAll}>
                     View All →
-                  </Link>
+                  </a>
                 </div>
                 <div className={styles.postsGrid}>
                   {categoryPosts.map((post) => (

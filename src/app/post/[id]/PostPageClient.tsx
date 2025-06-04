@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { marked } from 'marked';
 import { Post, Category } from '@/lib/slices/postsSlice';
@@ -43,7 +42,7 @@ export default function PostPageClient({
         <div className={styles.notFound}>
           <h1>Article Not Found</h1>
           <p>Sorry, we couldn&apos;t find the article you&apos;re looking for.</p>
-          <Link href="/" className={styles.backHome}>← Back to Home</Link>
+          <a href="/" className={styles.backHome}>← Back to Home</a>
         </div>
         <Footer />
       </>
@@ -64,17 +63,17 @@ export default function PostPageClient({
               {/* Article Header */}
               <header className={styles.articleHeader}>
                 <nav className={styles.breadcrumb}>
-                  <Link href="/">Home</Link>
+                  <a href="/">Home</a>
                   <span className={styles.separator}>›</span>
-                  <Link href={`/category/${getCategorySlug(post.categoryName)}`}>{post.categoryName}</Link>
+                  <a href={`/category/${getCategorySlug(post.categoryName)}`}>{post.categoryName}</a>
                   <span className={styles.separator}>›</span>
                   <span>{post.title}</span>
                 </nav>
                 
                 <div className={styles.categoryBadge}>
-                  <Link href={`/category/${getCategorySlug(post.categoryName)}`}>
+                  <a href={`/category/${getCategorySlug(post.categoryName)}`}>
                     {post.categoryName}
-                  </Link>
+                  </a>
                 </div>
                 
                 <h1 className={styles.title}>{post.title}</h1>

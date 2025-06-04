@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import styles from './Banner.module.css'
 import { Post } from '../../lib/slices/postsSlice'
@@ -139,18 +138,18 @@ export default function Banner({ featuredPosts }: BannerProps) {
               <div className={styles.textContent}>
                 <div className={styles.container}>
                   <div className={styles.slideInfo}>
-                    <Link 
+                    <a 
                       href={`/category/${getCategorySlug(post.categoryName)}`}
                       className={styles.categoryTag}
                     >
                       {post.categoryName}
-                    </Link>
+                    </a>
                     <h2 className={styles.slideTitle}>{post.title}</h2>
                     <p className={styles.slideDescription}>{post.description}</p>
                     <div className={styles.slideActions}>
-                      <Link href={`/post/${post.id}`} className={styles.readMoreBtn}>
+                      <a href={`/post/${post.id}`} className={styles.readMoreBtn}>
                         Read More
-                      </Link>
+                      </a>
                       <span className={styles.duration}>{post.duration} read</span>
                     </div>
                   </div>

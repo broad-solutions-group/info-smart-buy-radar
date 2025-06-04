@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { Post, Category } from '@/lib/slices/postsSlice';
 import { getCategorySlug, getAllPosts } from '@/lib/api';
@@ -38,7 +37,7 @@ export default function RecommendationSidebar({
           <h3 className={styles.sectionTitle}>Related Articles</h3>
           <div className={styles.postList}>
             {relatedPosts.map((post) => (
-              <Link key={post.id} href={`/post/${post.id}`} className={styles.postItem}>
+              <a key={post.id} href={`/post/${post.id}`} className={styles.postItem}>
                 <div className={styles.postImage}>
                   <Image
                     src={`https://${post.imageUrl}`}
@@ -55,7 +54,7 @@ export default function RecommendationSidebar({
                     <span className={styles.date}>{formatDate(post.createTime)}</span>
                   </div>
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
         </div>
@@ -69,7 +68,7 @@ export default function RecommendationSidebar({
         <h3 className={styles.sectionTitle}>Popular Articles</h3>
         <div className={styles.postList}>
           {popularPosts.map((post, index) => (
-            <Link key={post.id} href={`/post/${post.id}`} className={styles.postItem}>
+            <a key={post.id} href={`/post/${post.id}`} className={styles.postItem}>
               <div className={styles.postRank}>
                 <span className={styles.rankNumber}>{index + 1}</span>
               </div>
@@ -80,7 +79,7 @@ export default function RecommendationSidebar({
                   <span className={styles.date}>{formatDate(post.createTime)}</span>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
@@ -90,13 +89,13 @@ export default function RecommendationSidebar({
         <h3 className={styles.sectionTitle}>Popular Categories</h3>
         <div className={styles.categoryList}>
           {categories.map((category) => (
-            <Link 
+            <a 
               key={category.id} 
               href={`/category/${getCategorySlug(category.name)}`}
               className={styles.categoryItem}
             >
               {category.name}
-            </Link>
+            </a>
           ))}
         </div>
       </div>

@@ -1,6 +1,4 @@
-import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import styles from './PostCard.module.css'
 import { Post } from '../../lib/slices/postsSlice'
 
@@ -10,8 +8,6 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post, variant = 'default' }: PostCardProps) {
-  const router = useRouter()
-  
   const getCategorySlug = (categoryName: string) => {
     return categoryName.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')
   }
@@ -26,12 +22,12 @@ export default function PostCard({ post, variant = 'default' }: PostCardProps) {
   }
 
   const handlePostClick = () => {
-    router.push(`/post/${post.id}`)
+    window.location.href = `/post/${post.id}`
   }
 
   const handleCategoryClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    router.push(`/category/${getCategorySlug(post.categoryName)}`)
+    window.location.href = `/category/${getCategorySlug(post.categoryName)}`
   }
 
   return (

@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import styles from './Footer.module.css'
 
 export default function Footer() {
@@ -20,24 +19,24 @@ export default function Footer() {
             <h4 className={styles.sectionTitle}>Categories</h4>
             <ul className={styles.footerLinks}>
               <li>
-                <Link href="/category/seasonal-picks" className={styles.footerLink}>
+                <a href="/category/seasonal-picks" className={styles.footerLink}>
                   Seasonal Picks
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/category/renters-essentials" className={styles.footerLink}>
+                <a href="/category/renters-essentials" className={styles.footerLink}>
                   Renters&apos; Essentials
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/category/coupon-hacks" className={styles.footerLink}>
+                <a href="/category/coupon-hacks" className={styles.footerLink}>
                   Coupon Hacks
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/category/budget-upgrades" className={styles.footerLink}>
+                <a href="/category/budget-upgrades" className={styles.footerLink}>
                   Budget Upgrades
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -48,15 +47,15 @@ export default function Footer() {
             <p>Copyright © {currentYear} smartshoppingradar.com</p>
           </div>
           <div className={styles.legalLinks}>
-            <Link href="/about" className={styles.legalLink}>
+            <a href="/about" className={styles.legalLink}>
               About Us
-            </Link>
-            <Link href="/terms" className={styles.legalLink}>
+            </a>
+            <a href="/terms" className={styles.legalLink}>
               Terms of Service
-            </Link>
-            <Link href="/privacy" className={styles.legalLink}>
+            </a>
+            <a href="/privacy" className={styles.legalLink}>
               Privacy Policy
-            </Link>
+            </a>
           </div>
         </div>
       </div>

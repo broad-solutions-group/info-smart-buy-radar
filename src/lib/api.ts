@@ -13,9 +13,9 @@ export function getAllPosts(): Post[] {
 }
 
 // 根据分类获取文章
-export function getPostsByCategory(categoryName: string): Post[] {
+export function getPostsByCategory(categorySlug: string): Post[] {
   const category = siteData.categoryList.find(cat => 
-    cat.name.toLowerCase().replace(/\s+/g, '-') === categoryName.toLowerCase()
+    getCategorySlug(cat.name) === categorySlug.toLowerCase()
   )
   return category ? category.postList.sort(
     (a, b) => new Date(b.createTime).getTime() - new Date(a.createTime).getTime()
