@@ -88,6 +88,26 @@ export default function Header({ categories }: HeaderProps) {
     return name.trim().toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')
   }
 
+  // 检查当前路径是否匹配菜单项
+  const isCurrentPath = (path: string) => {
+    // 如果pathname为null，返回false
+    if (!pathname) return false
+    
+    // 首页精确匹配
+    if (path === '/' && pathname === '/') {
+      return true
+    }
+    
+    // 分类页面匹配（处理可能的尾部斜杠）
+    if (path.startsWith('/category/')) {
+      const normalizedPathname = pathname.replace(/\/$/, '') // 移除尾部斜杠
+      const normalizedPath = path.replace(/\/$/, '') // 移除尾部斜杠
+      return normalizedPathname === normalizedPath
+    }
+    
+    return false
+  }
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     if (searchQuery.trim() && !isSearching) {
@@ -121,18 +141,17 @@ export default function Header({ categories }: HeaderProps) {
               <li className={styles.navItem}>
                 <a 
                   href="/" 
-                  className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}>
+                  className={`${styles.navLink} ${isCurrentPath('/') ? styles.active : ''}`}>
                   Home
                 </a>
               </li>
               {categories.map((category) => {
                 const categoryPath = `/category/${getCategorySlug(category.name)}`;
-                console.log("[Desktop Nav] Pathname:", pathname, "CategoryPath:", categoryPath);
                 return (
                   <li key={category.id} className={styles.navItem}>
                     <a 
                       href={categoryPath}
-                      className={`${styles.navLink} ${pathname === categoryPath ? styles.active : ''}`}
+                      className={`${styles.navLink} ${isCurrentPath(categoryPath) ? styles.active : ''}`}
                     >
                       {category.name}
                     </a>
@@ -192,7 +211,7 @@ export default function Header({ categories }: HeaderProps) {
             <li className={styles.mobileNavItem}>
               <a 
                 href="/" 
-                className={`${styles.mobileNavLink} ${pathname === '/' ? styles.active : ''}`}
+                className={`${styles.mobileNavLink} ${isCurrentPath('/') ? styles.active : ''}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
@@ -200,12 +219,11 @@ export default function Header({ categories }: HeaderProps) {
             </li>
             {categories.map((category) => {
               const categoryPath = `/category/${getCategorySlug(category.name)}`;
-              console.log("[Mobile Nav] Pathname:", pathname, "CategoryPath:", categoryPath);
               return (
                 <li key={category.id} className={styles.mobileNavItem}>
                   <a 
                     href={categoryPath}
-                    className={`${styles.mobileNavLink} ${pathname === categoryPath ? styles.active : ''}`}
+                    className={`${styles.mobileNavLink} ${isCurrentPath(categoryPath) ? styles.active : ''}`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {category.name}

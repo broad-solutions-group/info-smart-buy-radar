@@ -1,0 +1,103 @@
+{
+    "code": 0,
+    "domain": "https://smartshoppingradar.com/",
+    "websiteType": "info",
+    "channelID": "1000002",
+    "gaID": "G-LK6R2Y1JCP",
+    "collectDataFlag": true,
+    "bottomAnchorFlag": true,
+    "topAnchorFlag": true,
+    "adxOrAdsFlag": true,
+    "adxInterstitialFlag": true,
+    "adxInterstitial": {
+        "type": "AdxInterstitial",
+        "index": 0,
+        "slot_account": "23155053380",
+        "slot_channel_tag": "ca-pub-8981344377250832-tag/HK",
+        "ad_unit": "04_smartshoppingradarcom_primary_home_inter_01"
+    },
+    "adx_bottom_anchor": {
+        "type": "adx_bottom_anchor",
+        "index": 0,
+        "slot_account": "23155053380",
+        "slot_channel_tag": "ca-pub-8981344377250832-tag/HK",
+        "ad_unit": "04_smartshoppingradarcom_primary_home_anchor_01"
+    },
+    "adPages": {
+        "index.html": [{
+                "type": "AdX",
+                "pagePageAdId": "seattle-ad-10001",
+                "slot_account": "23155053380",
+                "slot_channel_tag": "ca-pub-8981344377250832-tag/HK",
+                "ad_unit": "04_smartshoppingradarcom_primary_home_300x250_01",
+                "size": [
+                    300,
+                    250
+                ],
+                "unitId": "div-gpt-ad-1749004043203912"
+            },
+            {
+                "type": "AdX",
+                "pagePageAdId": "seattle-ad-10002",
+                "slot_account": "23155053380",
+                "slot_channel_tag": "ca-pub-8981344377250832-tag/HK",
+                "ad_unit": "04_smartshoppingradarcom_primary_home_300x250_02",
+                "size": [
+                    300,
+                    250
+                ],
+                "unitId": "div-gpt-ad-1749004043203354"
+            },
+            {
+                "type": "AdX",
+                "pagePageAdId": "seattle-ad-10003",
+                "slot_account": "23155053380",
+                "slot_channel_tag": "ca-pub-8981344377250832-tag/HK",
+                "ad_unit": "04_smartshoppingradarcom_primary_home_300x250_03",
+                "size": [
+                    300,
+                    250
+                ],
+                "unitId": "div-gpt-ad-1749004043203924"
+            },
+            {
+                "type": "AdX",
+                "pagePageAdId": "seattle-ad-10004",
+                "slot_account": "23155053380",
+                "slot_channel_tag": "ca-pub-8981344377250832-tag/HK",
+                "ad_unit": "04_smartshoppingradarcom_primary_home_300x250_04",
+                "size": [
+                    300,
+                    250
+                ],
+                "unitId": "div-gpt-ad-1749004043203435"
+            },
+            {
+                "type": "AdX",
+                "pagePageAdId": "seattle-ad-10005",
+                "slot_account": "23155053380",
+                "slot_channel_tag": "ca-pub-8981344377250832-tag/HK",
+                "ad_unit": "04_smartshoppingradarcom_primary_home_300x250_05",
+                "size": [
+                    300,
+                    250
+                ],
+                "unitId": "div-gpt-ad-1749004043203753"
+            }
+        ],
+        "list": [{
+            "type": "AdX",
+            "pagePageAdId": "seattle-ad-10001",
+            "slot_account": "23155053380",
+            "slot_channel_tag": "ca-pub-8981344377250832-tag/HK",
+            "ad_unit": "04_smartshoppingradarcom_primary_detail_300x250_01",
+            "size": [
+                300,
+                250
+            ],
+            "unitId": "div-gpt-ad-1749004043203453"
+        }]
+
+    },
+    "bakAdList": []
+}
