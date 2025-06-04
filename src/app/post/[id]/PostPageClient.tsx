@@ -108,21 +108,21 @@ export default function PostPageClient({
                 
                 <div className={styles.articleMeta}>
                   <div className={styles.metaLeft}>
+                    <div className={styles.categoryBadge}>
+                      <a href={`/category/${getCategorySlug(post.categoryName)}`}>
+                        {post.categoryName}
+                      </a>
+                    </div>
                     <span className={styles.date}>{formatDate(post.createTime)}</span>
                     <span className={styles.readTime}>{post.duration} read</span>
                   </div>
-                  <div className={styles.categoryBadge}>
-                    <a href={`/category/${getCategorySlug(post.categoryName)}`}>
-                      {post.categoryName}
-                    </a>
-                  </div>
                 </div>
+                
+                {/* Advertisement Banner */}
+                <AdBanner variant="horizontal" className={styles.articleAd} />
                 
                 <p className={styles.description}>{post.description}</p>
               </header>
-
-              {/* Advertisement Banner */}
-              <AdBanner variant="horizontal" className={styles.articleAd} />
 
               {/* Featured Image */}
               <div className={styles.imageContainer}>

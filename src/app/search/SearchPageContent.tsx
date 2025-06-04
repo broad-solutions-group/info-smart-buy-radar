@@ -7,6 +7,7 @@ import { Post, Category } from '@/lib/slices/postsSlice';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import PostCard from '@/components/PostCard/PostCard';
+import AdBanner from '@/components/AdBanner/AdBanner';
 import styles from './SearchPage.module.css';
 
 export default function SearchPageContent() {
@@ -95,6 +96,9 @@ export default function SearchPageContent() {
                 </button>
               </div>
             </form>
+            
+            {/* Advertisement Banner */}
+            <AdBanner variant="horizontal" className={styles.searchAd} />
           </header>
 
           {/* Loading State */}
