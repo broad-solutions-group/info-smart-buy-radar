@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react'
+import { usePathname } from 'next/navigation';
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -11,6 +12,7 @@ interface HeaderProps {
 }
 
 export default function Header({ categories }: HeaderProps) {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchExpanded, setIsSearchExpanded] = useState(false)
@@ -83,7 +85,7 @@ export default function Header({ categories }: HeaderProps) {
   }, [isSearchExpanded])
 
   const getCategorySlug = (name: string) => {
-    return name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')
+    return name.trim().toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')
   }
 
   const handleSearch = (e: React.FormEvent) => {
@@ -117,20 +119,26 @@ export default function Header({ categories }: HeaderProps) {
           <nav className={styles.nav}>
             <ul className={styles.navList}>
               <li className={styles.navItem}>
-                <a href="/" className={styles.navLink}>
+                <a 
+                  href="/" 
+                  className={`${styles.navLink} ${pathname === '/' ? styles.active : ''}`}>
                   Home
                 </a>
               </li>
-              {categories.map((category) => (
-                <li key={category.id} className={styles.navItem}>
-                  <a 
-                    href={`/category/${getCategorySlug(category.name)}`}
-                    className={styles.navLink}
-                  >
-                    {category.name}
-                  </a>
-                </li>
-              ))}
+              {categories.map((category) => {
+                const categoryPath = `/category/${getCategorySlug(category.name)}`;
+                console.log("[Desktop Nav] Pathname:", pathname, "CategoryPath:", categoryPath);
+                return (
+                  <li key={category.id} className={styles.navItem}>
+                    <a 
+                      href={categoryPath}
+                      className={`${styles.navLink} ${pathname === categoryPath ? styles.active : ''}`}
+                    >
+                      {category.name}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
@@ -184,23 +192,27 @@ export default function Header({ categories }: HeaderProps) {
             <li className={styles.mobileNavItem}>
               <a 
                 href="/" 
-                className={styles.mobileNavLink}
+                className={`${styles.mobileNavLink} ${pathname === '/' ? styles.active : ''}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </a>
             </li>
-            {categories.map((category) => (
-              <li key={category.id} className={styles.mobileNavItem}>
-                <a 
-                  href={`/category/${getCategorySlug(category.name)}`}
-                  className={styles.mobileNavLink}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {category.name}
-                </a>
-              </li>
-            ))}
+            {categories.map((category) => {
+              const categoryPath = `/category/${getCategorySlug(category.name)}`;
+              console.log("[Mobile Nav] Pathname:", pathname, "CategoryPath:", categoryPath);
+              return (
+                <li key={category.id} className={styles.mobileNavItem}>
+                  <a 
+                    href={categoryPath}
+                    className={`${styles.mobileNavLink} ${pathname === categoryPath ? styles.active : ''}`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {category.name}
+                  </a>
+                </li>
+              );
+            })}
             <li className={styles.mobileNavItem}>
               <form className={styles.mobileSearchForm} onSubmit={handleSearch}>
                 <input

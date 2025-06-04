@@ -217,6 +217,12 @@
   text-decoration: none;
 }
 
+/* 新增 active 状态 */
+.navLink.active {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
 .navLink::after {
   content: '';
   position: absolute;
@@ -228,7 +234,8 @@
   transition: width 0.2s ease;
 }
 
-.navLink:hover::after {
+.navLink:hover::after,
+.navLink.active::after { /* 同时应用到 active 状态 */
   width: 100%;
 }
 
