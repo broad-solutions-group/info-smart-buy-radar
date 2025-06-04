@@ -9,6 +9,8 @@ import Footer from '@/components/Footer/Footer';
 import PostCard from '@/components/PostCard/PostCard';
 import AdBanner from '@/components/AdBanner/AdBanner';
 import styles from './SearchPage.module.css';
+import AdPlaceholder from '@/components/AdPlaceholder/AdPlaceholder';
+import adsPlaceholderImg from '../ads_300_250.png';
 
 export default function SearchPageContent() {
   const searchParams = useSearchParams();
@@ -117,8 +119,14 @@ export default function SearchPageContent() {
               </div>
             </form>
             
-            {/* Advertisement Banner */}
-            <AdBanner variant="horizontal" className={styles.searchAd} />
+            {/* 广告位 - 使用组件化设计 */}
+            <AdPlaceholder 
+              id="seattle-ad-10001"
+              imageSrc={adsPlaceholderImg}
+              alt="Advertisement"
+              width={300}
+              height={250}
+            />
           </header>
 
           {/* Loading State */}

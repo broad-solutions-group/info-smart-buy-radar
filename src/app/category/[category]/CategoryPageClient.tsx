@@ -5,6 +5,8 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import PostCard from '@/components/PostCard/PostCard';
 import styles from './CategoryPage.module.css';
+import AdPlaceholder from '@/components/AdPlaceholder/AdPlaceholder';
+import adsPlaceholderImg from '../../ads_300_250.png';
 
 interface CategoryPageClientProps {
   posts: Post[];
@@ -28,6 +30,14 @@ export default function CategoryPageClient({
           <p>Sorry, we couldn&apos;t find any articles in this category.</p>
           <a href="/" className={styles.backHome}>← Back to Home</a>
         </div>
+        {/* 广告位 - 使用组件化设计 */}
+        <AdPlaceholder 
+          id="seattle-ad-10001"
+          imageSrc={adsPlaceholderImg}
+          alt="Advertisement"
+          width={300}
+          height={250}
+        />
         <Footer />
       </>
     );
@@ -50,6 +60,15 @@ export default function CategoryPageClient({
               {posts.length} article{posts.length !== 1 ? 's' : ''} in this category
             </p>
           </header>
+
+          {/* 广告位 - 使用组件化设计 */}
+          <AdPlaceholder 
+            id="seattle-ad-10001"
+            imageSrc={adsPlaceholderImg}
+            alt="Advertisement"
+            width={300}
+            height={250}
+          />
 
           {/* Articles Grid */}
           <section className={styles.articlesSection}>

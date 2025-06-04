@@ -26,6 +26,7 @@
 .articleContent {
   background: white;
   border-radius: 12px;
+  margin-bottom: 2rem;
   padding: 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding-top: 1.25rem;
@@ -117,6 +118,10 @@
   background: #f9fafb;
   border-radius: 8px;
   border-left: 4px solid #3b82f6;
+}
+
+.description p {
+  margin: 0;
 }
 
 .featuredImage {

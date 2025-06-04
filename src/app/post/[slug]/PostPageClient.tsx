@@ -9,6 +9,8 @@ import Footer from '@/components/Footer/Footer';
 import RecommendationSidebar from '@/components/RecommendationSidebar/RecommendationSidebar';
 import AdBanner from '@/components/AdBanner/AdBanner';
 import styles from './PostPage.module.css';
+import AdPlaceholder from '@/components/AdPlaceholder/AdPlaceholder';
+import adsPlaceholderImg from '../../ads_300_250.png';
 
 interface PostPageClientProps {
   post: Post;
@@ -86,10 +88,14 @@ export default function PostPageClient({ post, relatedPosts, categories }: PostP
                   </div>
                 </header>
 
-                {/* Advertisement Banner */}
-                <div className={styles.adContainer}>
-                  <AdBanner variant="horizontal" />
-                </div>
+                {/* 广告位 - 使用组件化设计 */}
+                <AdPlaceholder 
+                  id="seattle-ad-10001"
+                  imageSrc={adsPlaceholderImg}
+                  alt="Advertisement"
+                  width={300}
+                  height={250}
+                />
 
                 <div className={styles.description}>
                   <p>{post.description}</p>

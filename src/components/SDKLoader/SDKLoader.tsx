@@ -77,63 +77,6 @@ export default function SDKLoader({ onSDKLoaded }: SDKLoaderProps) {
     };
   }, [isLoaded, isLoading, onSDKLoaded]);
 
-  // 开发环境下显示加载状态
-  if (process.env.NODE_ENV === 'development') {
-    if (error) {
-      return (
-        <div style={{ 
-          position: 'fixed', 
-          top: 10, 
-          right: 10, 
-          background: '#ff4444', 
-          color: 'white', 
-          padding: '8px 12px', 
-          borderRadius: '4px',
-          fontSize: '12px',
-          zIndex: 9999
-        }}>
-          SDK Error: {error}
-        </div>
-      );
-    }
-    
-    if (isLoading) {
-      return (
-        <div style={{ 
-          position: 'fixed', 
-          top: 10, 
-          right: 10, 
-          background: '#4444ff', 
-          color: 'white', 
-          padding: '8px 12px', 
-          borderRadius: '4px',
-          fontSize: '12px',
-          zIndex: 9999
-        }}>
-          Loading SDK...
-        </div>
-      );
-    }
-    
-    if (isLoaded) {
-      return (
-        <div style={{ 
-          position: 'fixed', 
-          top: 10, 
-          right: 10, 
-          background: '#44ff44', 
-          color: 'white', 
-          padding: '8px 12px', 
-          borderRadius: '4px',
-          fontSize: '12px',
-          zIndex: 9999
-        }}>
-          SDK Loaded ✓
-        </div>
-      );
-    }
-  }
-
   // 生产环境下不渲染任何内容
   return null;
 } 
