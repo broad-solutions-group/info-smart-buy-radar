@@ -11,9 +11,9 @@
 }
 
 .footerContent {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
   padding: 3rem 0 2rem;
 }
 
@@ -33,6 +33,8 @@
   color: #d1d5db;
   line-height: 1.6;
   margin-bottom: 0;
+  max-width: 100%;
+  text-align: justify;
 }
 
 .sectionTitle {
@@ -56,6 +58,8 @@
   color: #d1d5db;
   text-decoration: none;
   transition: color 0.2s ease;
+  display: inline-block;
+  padding: 0.25rem 0;
 }
 
 .footerLink:hover {
@@ -101,11 +105,57 @@
   text-decoration: none;
 }
 
+/* Small mobile optimization */
+@media (max-width: 480px) {
+  .footerContent {
+    gap: 2rem;
+    padding: 2.5rem 0 1.5rem;
+  }
+  
+  .footerTitle {
+    font-size: 1.375rem;
+  }
+  
+  .footerDescription {
+    font-size: 0.95rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1rem;
+  }
+  
+  .legalLinks {
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 /* Tablet styles */
 @media (min-width: 768px) {
   .footerContent {
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 3rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+  
+  .footerSection:first-child {
+    flex: 3;
+    max-width: 60%;
+  }
+  
+  .footerSection:last-child {
+    flex: 2;
+    min-width: 200px;
+    max-width: 280px;
+    text-align: left;
+  }
+  
+  .footerLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
   
   .footerBottom {
@@ -122,7 +172,7 @@
 /* Desktop styles */
 @media (min-width: 1024px) {
   .footerContent {
-    gap: 4rem;
+    gap: 5rem;
     padding: 4rem 0 2rem;
   }
   
@@ -132,12 +182,40 @@
   
   .footerDescription {
     font-size: 1rem;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+  
+  .footerSection:first-child {
+    max-width: 55%;
+  }
+  
+  .footerSection:last-child {
+    min-width: 220px;
+    max-width: 260px;
+  }
+  
+  .sectionTitle {
+    font-size: 1.2rem;
   }
 }
 
 /* Large screen adjustments */
 @media (min-width: 1200px) {
   .footerContent {
-    grid-template-columns: 3fr 1fr 1fr;
+    gap: 6rem;
+  }
+  
+  .footerSection:first-child {
+    max-width: 50%;
+  }
+  
+  .footerSection:last-child {
+    min-width: 240px;
+    max-width: 280px;
+  }
+  
+  .footerDescription {
+    max-width: 500px;
   }
 } 
