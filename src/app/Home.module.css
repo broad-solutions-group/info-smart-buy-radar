@@ -3,12 +3,25 @@
 }
 
 .loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 50vh;
+  background-color: #ffffff;
+  z-index: 9999;
   gap: 1rem;
+}
+
+.loading p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  font-weight: 500;
 }
 
 .spinner {

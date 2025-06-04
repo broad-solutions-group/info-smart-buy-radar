@@ -86,8 +86,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 20vh;
+  min-height: 30vh;
   gap: 1rem;
+  text-align: center;
+}
+
+.loading p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.loadingSubtext {
+  font-size: 0.9rem !important;
+  color: #666 !important;
+  font-weight: 400 !important;
 }
 
 .spinner {
@@ -187,6 +201,64 @@
   overflow: hidden;
 }
 
+/* 默认搜索动效样式 */
+.defaultSearchSection {
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.searchAnimation {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.searchAnimationIcon {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.animatedSearchIcon {
+  width: 64px;
+  height: 64px;
+  color: #3b82f6;
+  animation: searchPulse 2s ease-in-out infinite;
+}
+
+@keyframes searchPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.searchAnimationTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  animation: searchTextFade 3s ease-in-out infinite;
+}
+
+@keyframes searchTextFade {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.searchAnimationText {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .title {
@@ -230,5 +302,22 @@
   
   .searchButton {
     padding: 0.75rem 1rem;
+  }
+  
+  .defaultSearchSection {
+    padding: 2rem 0;
+  }
+  
+  .animatedSearchIcon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .searchAnimationTitle {
+    font-size: 1.25rem;
+  }
+  
+  .searchAnimationText {
+    font-size: 0.9rem;
   }
 } 

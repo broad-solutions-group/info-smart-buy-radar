@@ -15,6 +15,7 @@ export default function Header({ categories }: HeaderProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchExpanded, setIsSearchExpanded] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
 
   // 滚动监听逻辑
@@ -87,8 +88,11 @@ export default function Header({ categories }: HeaderProps) {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    if (searchQuery.trim()) {
-      window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`
+    if (searchQuery.trim() && !isSearching) {
+      setIsSearching(true)
+      // 立即跳转，不等待任何延迟
+      const searchUrl = `/search?q=${encodeURIComponent(searchQuery.trim())}`
+      window.location.href = searchUrl
     }
   }
 
@@ -142,14 +146,19 @@ export default function Header({ categories }: HeaderProps) {
                   className={styles.searchInput}
                 />
                 <button 
-                  type="button" 
-                  className={styles.searchToggle}
+                  type="submit" 
+                  className={`${styles.searchToggle} ${isSearching ? styles.searching : ''}`}
                   onClick={toggleSearch}
                   aria-label="Toggle search"
+                  disabled={isSearching}
                 >
-                  <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  {isSearching ? (
+                    <div className={styles.searchSpinner}></div>
+                  ) : (
+                    <svg className={styles.searchIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
                 </button>
               </form>
             </div>
@@ -200,9 +209,14 @@ export default function Header({ categories }: HeaderProps) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className={styles.mobileSearchInput}
+                  disabled={isSearching}
                 />
-                <button type="submit" className={styles.mobileSearchButton}>
-                  Search
+                <button 
+                  type="submit" 
+                  className={`${styles.mobileSearchButton} ${isSearching ? styles.searching : ''}`}
+                  disabled={isSearching}
+                >
+                  {isSearching ? 'Searching...' : 'Search'}
                 </button>
               </form>
             </li>

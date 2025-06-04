@@ -26,7 +26,13 @@ export default function SearchPageContent() {
     const query = searchParams?.get('q') || '';
     if (query) {
       setSearchQuery(query);
-      performSearch(query);
+      // 立即设置加载状态，提供即时反馈
+      setLoading(true);
+      setHasSearched(true);
+      // 使用setTimeout确保UI更新后再执行搜索
+      setTimeout(() => {
+        performSearch(query);
+      }, 0);
     }
   }, [searchParams]);
 
@@ -34,6 +40,7 @@ export default function SearchPageContent() {
     if (!query.trim()) {
       setSearchResults([]);
       setHasSearched(false);
+      setLoading(false);
       return;
     }
 
@@ -41,12 +48,25 @@ export default function SearchPageContent() {
     setHasSearched(true);
     
     try {
+      // 添加最小延迟，确保用户能看到加载状态
+      const startTime = Date.now();
       const results = searchPosts(query.trim());
-      setSearchResults(results);
+      
+      const elapsed = Date.now() - startTime;
+      const minDelay = 300; // 最小300ms延迟
+      
+      if (elapsed < minDelay) {
+        setTimeout(() => {
+          setSearchResults(results);
+          setLoading(false);
+        }, minDelay - elapsed);
+      } else {
+        setSearchResults(results);
+        setLoading(false);
+      }
     } catch (error) {
       console.error('Search error:', error);
       setSearchResults([]);
-    } finally {
       setLoading(false);
     }
   };
@@ -105,7 +125,8 @@ export default function SearchPageContent() {
           {loading && (
             <div className={styles.loading}>
               <div className={styles.spinner}></div>
-              <p>Searching...</p>
+              <p>Searching for &ldquo;{searchQuery}&rdquo;...</p>
+              <p className={styles.loadingSubtext}>Finding the best articles for you</p>
             </div>
           )}
 
@@ -115,8 +136,8 @@ export default function SearchPageContent() {
               <div className={styles.resultsHeader}>
                 <h2 className={styles.resultsTitle}>
                   {searchResults.length > 0 
-                    ? `Found ${searchResults.length} result${searchResults.length !== 1 ? 's' : ''} for "${searchQuery}"`
-                    : `No results found for "${searchQuery}"`
+                    ? `Found ${searchResults.length} result${searchResults.length !== 1 ? 's' : ''} for &ldquo;${searchQuery}&rdquo;`
+                    : `No results found for &ldquo;${searchQuery}&rdquo;`
                   }
                 </h2>
                 {searchResults.length === 0 && (
@@ -137,6 +158,21 @@ export default function SearchPageContent() {
                   ))}
                 </div>
               )}
+            </section>
+          )}
+
+          {/* Default Search Animation - 当没有搜索时显示 */}
+          {!loading && !hasSearched && (
+            <section className={styles.defaultSearchSection}>
+              <div className={styles.searchAnimation}>
+                <div className={styles.searchAnimationIcon}>
+                  <svg className={styles.animatedSearchIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L16.514 16.506L21 21ZM19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className={styles.searchAnimationTitle}>Search...</h3>
+                <p className={styles.searchAnimationText}>Enter keywords above to find articles, tips, and deals</p>
+              </div>
             </section>
           )}
 
