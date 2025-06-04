@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { marked } from 'marked';
 import { Post, Category } from '@/lib/slices/postsSlice';
@@ -7,6 +8,7 @@ import { getCategorySlug } from '@/lib/api';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import RecommendationSidebar from '@/components/RecommendationSidebar';
+import AdBanner from '@/components/AdBanner/AdBanner';
 import styles from './PostPage.module.css';
 
 interface PostPageClientProps {
@@ -20,6 +22,38 @@ export default function PostPageClient({
   relatedPosts, 
   categories 
 }: PostPageClientProps) {
+  const [sidebarFixed, setSidebarFixed] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const articleElement = document.querySelector(`.${styles.article}`);
+      const footerElement = document.querySelector('footer');
+      
+      if (articleElement && footerElement) {
+        const articleRect = articleElement.getBoundingClientRect();
+        const footerRect = footerElement.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // 当文章底部接近视口底部或页脚进入视口时，取消固定定位
+        const articleBottom = articleRect.bottom;
+        const shouldUnfix = articleBottom <= windowHeight + 100 || footerRect.top <= windowHeight;
+        
+        setSidebarFixed(!shouldUnfix);
+      }
+    };
+
+    // 添加滚动监听
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // 初始检查
+    handleScroll();
+    
+    // 清理监听器
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -57,7 +91,7 @@ export default function PostPageClient({
       <Header categories={categories} />
       <main className={styles.main}>
         <div className={styles.container}>
-          <div className={styles.contentWrapper}>
+          <div className={`${styles.contentWrapper} ${!sidebarFixed ? styles.contentWrapperUnfixed : ''}`}>
             {/* Left Column: Article Content */}
             <article className={styles.article}>
               {/* Article Header */}
@@ -70,21 +104,25 @@ export default function PostPageClient({
                   <span>{post.title}</span>
                 </nav>
                 
-                <div className={styles.categoryBadge}>
-                  <a href={`/category/${getCategorySlug(post.categoryName)}`}>
-                    {post.categoryName}
-                  </a>
-                </div>
-                
                 <h1 className={styles.title}>{post.title}</h1>
                 
                 <div className={styles.articleMeta}>
-                  <span className={styles.date}>{formatDate(post.createTime)}</span>
-                  <span className={styles.readTime}>{post.duration} read</span>
+                  <div className={styles.metaLeft}>
+                    <span className={styles.date}>{formatDate(post.createTime)}</span>
+                    <span className={styles.readTime}>{post.duration} read</span>
+                  </div>
+                  <div className={styles.categoryBadge}>
+                    <a href={`/category/${getCategorySlug(post.categoryName)}`}>
+                      {post.categoryName}
+                    </a>
+                  </div>
                 </div>
                 
                 <p className={styles.description}>{post.description}</p>
               </header>
+
+              {/* Advertisement Banner */}
+              <AdBanner variant="horizontal" className={styles.articleAd} />
 
               {/* Featured Image */}
               <div className={styles.imageContainer}>
@@ -92,7 +130,7 @@ export default function PostPageClient({
                   src={`https://${post.imageUrl}`}
                   alt={post.title}
                   width={800}
-                  height={400}
+                  height={500}
                   className={styles.featuredImage}
                   priority
                 />
@@ -112,6 +150,7 @@ export default function PostPageClient({
               currentPost={post}
               relatedPosts={relatedPosts}
               categories={categories}
+              isFixed={sidebarFixed}
             />
           </div>
         </div>

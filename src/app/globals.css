@@ -17,6 +17,8 @@ body {
 
 body {
   background-color: #ffffff;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -153,5 +155,19 @@ p {
   
   h2 {
     font-size: 1.5rem;
+  }
+}
+
+/* 页面主要内容区域 - 为固定Header预留空间 */
+main {
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+}
+
+/* 响应式调整Header高度 */
+@media (max-width: 767px) {
+  main {
+    margin-top: 60px; /* 移动端Header高度较小 */
+    min-height: calc(100vh - 60px);
   }
 }

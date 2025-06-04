@@ -1,19 +1,20 @@
 import Image from 'next/image';
 import { Post, Category } from '@/lib/slices/postsSlice';
 import { getCategorySlug, getAllPosts } from '@/lib/api';
-import AdBanner from '@/components/AdBanner/AdBanner';
 import styles from './RecommendationSidebar.module.css';
 
 interface RecommendationSidebarProps {
   currentPost: Post;
   relatedPosts: Post[];
   categories: Category[];
+  isFixed?: boolean;
 }
 
 export default function RecommendationSidebar({ 
   currentPost, 
   relatedPosts, 
-  categories 
+  categories,
+  isFixed = true
 }: RecommendationSidebarProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -30,7 +31,7 @@ export default function RecommendationSidebar({
     .slice(0, 5);
 
   return (
-    <aside className={styles.sidebar}>
+    <aside className={`${styles.sidebar} ${!isFixed ? styles.sidebarUnfixed : ''}`}>
       {/* Related Articles */}
       {relatedPosts.length > 0 && (
         <div className={styles.section}>
@@ -43,7 +44,7 @@ export default function RecommendationSidebar({
                     src={`https://${post.imageUrl}`}
                     alt={post.title}
                     width={80}
-                    height={60}
+                    height={80}
                     className={styles.thumbnail}
                   />
                 </div>
@@ -59,9 +60,6 @@ export default function RecommendationSidebar({
           </div>
         </div>
       )}
-
-      {/* Sidebar Advertisement */}
-      <AdBanner variant="square" className={styles.sidebarAd} />
 
       {/* Popular Articles */}
       <div className={styles.section}>
@@ -97,24 +95,6 @@ export default function RecommendationSidebar({
               {category.name}
             </a>
           ))}
-        </div>
-      </div>
-
-      {/* Newsletter Module */}
-      <div className={styles.section}>
-        <div className={styles.newsletter}>
-          <h3 className={styles.sectionTitle}>Stay Updated</h3>
-          <p className={styles.newsletterDesc}>Get the latest shopping guides and deals delivered to your inbox</p>
-          <form className={styles.newsletterForm}>
-            <input 
-              type="email" 
-              placeholder="Enter your email"
-              className={styles.emailInput}
-            />
-            <button type="submit" className={styles.subscribeBtn}>
-              Subscribe
-            </button>
-          </form>
         </div>
       </div>
     </aside>
