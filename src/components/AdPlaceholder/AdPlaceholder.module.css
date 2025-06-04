@@ -1,0 +1,54 @@
+.adContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: #fff;
+}
+
+.adTip {
+  font-size: 0.75rem;
+  color: #666;
+  margin: 0.2rem 0;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.adImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.adPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+}
+
+.placeholderText {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .adContainer {
+    padding: 0.25rem;
+  }
+  
+  .adTip {
+    font-size: 0.7rem;
+  }
+  
+  .placeholderText {
+    font-size: 0.9rem;
+  }
+} 

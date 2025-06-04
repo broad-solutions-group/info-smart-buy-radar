@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import styles from './Banner.module.css'
 import { Post } from '../../lib/slices/postsSlice'
@@ -15,6 +15,26 @@ export default function Banner({ featuredPosts }: BannerProps) {
   const touchStartX = useRef<number>(0)
   const touchEndX = useRef<number>(0)
   const bannerRef = useRef<HTMLDivElement>(null)
+
+  const pauseAutoPlay = useCallback(() => {
+    setIsAutoPlaying(false)
+    setTimeout(() => setIsAutoPlaying(true), 10000)
+  }, [])
+
+  const goToSlide = useCallback((index: number) => {
+    setCurrentSlide(index)
+    pauseAutoPlay()
+  }, [pauseAutoPlay])
+
+  const goToPrevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + featuredPosts.length) % featuredPosts.length)
+    pauseAutoPlay()
+  }, [featuredPosts.length, pauseAutoPlay])
+
+  const goToNextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % featuredPosts.length)
+    pauseAutoPlay()
+  }, [featuredPosts.length, pauseAutoPlay])
 
   useEffect(() => {
     if (!isAutoPlaying) return
@@ -40,27 +60,7 @@ export default function Banner({ featuredPosts }: BannerProps) {
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-    pauseAutoPlay()
-  }
-
-  const goToPrevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + featuredPosts.length) % featuredPosts.length)
-    pauseAutoPlay()
-  }
-
-  const goToNextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % featuredPosts.length)
-    pauseAutoPlay()
-  }
-
-  const pauseAutoPlay = () => {
-    setIsAutoPlaying(false)
-    setTimeout(() => setIsAutoPlaying(true), 10000)
-  }
+  }, [goToPrevSlide, goToNextSlide])
 
   // 触摸事件处理
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -147,7 +147,7 @@ export default function Banner({ featuredPosts }: BannerProps) {
                     <h2 className={styles.slideTitle}>{post.title}</h2>
                     <p className={styles.slideDescription}>{post.description}</p>
                     <div className={styles.slideActions}>
-                      <a href={`/post/${post.id}`} className={styles.readMoreBtn}>
+                      <a href={`/post/${post.slug}`} className={styles.readMoreBtn}>
                         Read More
                       </a>
                       <span className={styles.duration}>{post.duration} read</span>

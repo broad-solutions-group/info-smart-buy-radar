@@ -38,7 +38,7 @@ export default function RecommendationSidebar({
           <h3 className={styles.sectionTitle}>Related Articles</h3>
           <div className={styles.postList}>
             {relatedPosts.map((post) => (
-              <a key={post.id} href={`/post/${post.id}`} className={styles.postItem}>
+              <a key={post.id} href={`/post/${post.slug}`} className={styles.postItem}>
                 <div className={styles.postImage}>
                   <Image
                     src={`https://${post.imageUrl}`}
@@ -66,7 +66,7 @@ export default function RecommendationSidebar({
         <h3 className={styles.sectionTitle}>Popular Articles</h3>
         <div className={styles.postList}>
           {popularPosts.map((post, index) => (
-            <a key={post.id} href={`/post/${post.id}`} className={styles.postItem}>
+            <a key={post.id} href={`/post/${post.slug}`} className={styles.postItem}>
               <div className={styles.postRank}>
                 <span className={styles.rankNumber}>{index + 1}</span>
               </div>

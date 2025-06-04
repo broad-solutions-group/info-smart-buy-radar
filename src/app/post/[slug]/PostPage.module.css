@@ -1,0 +1,234 @@
+/* Post Page Styles */
+.main {
+  margin-top: 90px;
+  min-height: calc(100vh - 90px);
+  background-color: #f8f9fa;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+.article {
+  flex: 1;
+  max-width: calc(1200px - 340px - 4.5rem);
+  margin-right: 2.5rem;
+}
+
+.articleContent {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding-top: 1.25rem;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.breadcrumb a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.separator {
+  color: #9ca3af;
+}
+
+.articleHeader {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metaLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.categoryBadge {
+  background: #3b82f6;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.categoryBadge:hover {
+  background: #2563eb;
+}
+
+.publishDate,
+.readTime {
+  color: #6b7280;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.adContainer {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.description {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #374151;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+}
+
+.featuredImage {
+  margin: 2rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #374151;
+}
+
+.content h2,
+.heading {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 2rem 0 1rem 0;
+  line-height: 1.3;
+}
+
+.content h3,
+.subheading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 1.5rem 0 0.75rem 0;
+  line-height: 1.3;
+}
+
+.paragraph {
+  margin-bottom: 1.5rem;
+}
+
+.boldParagraph {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.list {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.list li {
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .contentWrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .article {
+    max-width: 100%;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .articleContent {
+    padding: 1.5rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .metaLeft {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .articleContent {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .metaLeft {
+    gap: 0.5rem;
+  }
+}
+
+/* Fixed sidebar styles */
+.contentWrapperUnfixed {
+  /* Styles when sidebar is not fixed */
+}
+
+.contentWrapperUnfixed .article {
+  max-width: 100% !important;
+  margin-right: 0 !important;
+}
+
+.articleHeader {
+  margin-bottom: 1rem;
+}

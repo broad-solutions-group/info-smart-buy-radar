@@ -22,7 +22,7 @@ export default function PostCard({ post, variant = 'default' }: PostCardProps) {
   }
 
   const handlePostClick = () => {
-    window.location.href = `/post/${post.id}`
+    window.location.href = `/post/${post.slug}`
   }
 
   const handleCategoryClick = (e: React.MouseEvent) => {

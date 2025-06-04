@@ -40,10 +40,11 @@
     "build": "cross-env NEXT_PRIVATE_STANDALONE=true next build",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts",
     "check": "npm run build && tsc && wrangler deploy --dry-run",
+    "copy-ads": "node scripts/copy-ads.js",
     "deploy": "wrangler deploy",
     "dev": "next dev",
     "lint": "next lint",
-    "postbuild": "opennextjs-cloudflare build -s",
+    "postbuild": "opennextjs-cloudflare build -s && node scripts/copy-ads.js",
     "preview": "npm run build && wrangler dev",
     "start": "next start"
   }

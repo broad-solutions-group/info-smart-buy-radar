@@ -10,6 +10,7 @@
 - **CSS Modules** - 样式管理
 - **TypeScript** - 类型安全
 - **静态站点生成 (SSG)** - 优化性能
+- **SDK自动加载** - 集成perfect_sdk_info_mixed脚本
 
 ### 功能模块
 
@@ -45,6 +46,12 @@
 - 服务条款 (/terms)
 - 隐私政策 (/privacy)
 - 404错误页面
+
+#### 6. SDK集成
+- 自动加载perfect_sdk_info_mixed.js脚本
+- 应用初始化和状态管理
+- 开发环境调试工具
+- SDK测试页面 (/test-sdk)
 
 ### 响应式设计
 - **PC端**: >1200px
@@ -98,7 +105,10 @@ src/
 │   ├── Header/            # 头部导航
 │   ├── Footer/            # 页脚
 │   ├── Banner/            # 轮播横幅
-│   └── PostCard/          # 文章卡片
+│   ├── PostCard/          # 文章卡片
+│   ├── AppLoader/         # 应用加载器
+│   ├── SDKLoader/         # SDK加载器
+│   └── ClientEffects/     # 客户端效果
 ├── lib/                   # 工具库
 │   ├── api.ts            # API函数
 │   ├── store.ts          # Redux store
@@ -124,6 +134,15 @@ src/
 - 任何静态文件托管服务
 
 ## 开发说明
+
+### SDK集成功能
+项目已集成perfect_sdk_info_mixed.js脚本的自动加载功能：
+- 应用启动时自动加载SDK脚本
+- 智能重试机制确保加载成功
+- 开发环境提供可视化状态指示器
+- 访问 `/test-sdk` 页面进行功能测试
+
+详细文档请参考：[SDK加载功能文档](docs/SDK_LOADING.md)
 
 ### 添加新文章
 1. 在 `Smart-Buy-Radar.json` 中添加文章数据

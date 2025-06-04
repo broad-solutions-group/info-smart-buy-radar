@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export interface Post {
   id: number
   title: string
+  slug: string
   categoryName: string
   createTime: string
   duration: string
