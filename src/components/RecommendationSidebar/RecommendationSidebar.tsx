@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Post, Category } from '@/lib/slices/postsSlice';
 import { getCategorySlug, getAllPosts } from '@/lib/api';
+import AdBanner from '@/components/AdBanner/AdBanner';
 import styles from './RecommendationSidebar.module.css';
 
 interface RecommendationSidebarProps {
@@ -59,6 +60,9 @@ export default function RecommendationSidebar({
           </div>
         </div>
       )}
+
+      {/* Sidebar Advertisement */}
+      <AdBanner variant="square" className={styles.sidebarAd} />
 
       {/* Popular Articles */}
       <div className={styles.section}>

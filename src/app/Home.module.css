@@ -25,6 +25,10 @@
   100% { transform: rotate(360deg); }
 }
 
+.adSection {
+  background-color: #ffffff;
+}
+
 .section {
   padding: 1.5rem 0;
 }

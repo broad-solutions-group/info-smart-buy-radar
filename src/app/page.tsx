@@ -7,6 +7,7 @@ import { Post, Category } from '@/lib/slices/postsSlice';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import Banner from '@/components/Banner/Banner';
+import AdBanner from '@/components/AdBanner/AdBanner';
 import PostCard from '@/components/PostCard/PostCard';
 import styles from './Home.module.css';
 
@@ -66,6 +67,13 @@ export default function HomePage() {
       <main className={styles.main}>
         {/* Hero Banner */}
         <Banner featuredPosts={featuredPosts} />
+
+        {/* Above Fold Advertisement */}
+        <section className={styles.adSection}>
+          <div className={styles.container}>
+            <AdBanner variant="horizontal" className="aboveFold" />
+          </div>
+        </section>
 
         {/* Featured Articles Section */}
         <section className={styles.section}>
