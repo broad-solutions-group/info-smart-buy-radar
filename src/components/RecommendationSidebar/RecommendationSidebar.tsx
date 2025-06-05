@@ -10,6 +10,66 @@ interface RecommendationSidebarProps {
   isFixed?: boolean;
 }
 
+// 工具函数：获取来自不同分类的文章
+function getDiversifiedPosts(allPosts: Post[], currentPost: Post, limit: number): Post[] {
+  // 过滤掉当前文章
+  const availablePosts = allPosts.filter(post => post.id !== currentPost.id);
+  
+  // 按分类分组
+  const postsByCategory = availablePosts.reduce((acc, post) => {
+    if (!acc[post.categoryName]) {
+      acc[post.categoryName] = [];
+    }
+    acc[post.categoryName].push(post);
+    return acc;
+  }, {} as Record<string, Post[]>);
+  
+  // 获取所有分类名称并打乱顺序
+  const categoryNames = Object.keys(postsByCategory);
+  const shuffledCategories = [...categoryNames].sort(() => Math.random() - 0.5);
+  
+  const result: Post[] = [];
+  let categoryIndex = 0;
+  
+  // 轮流从不同分类中选择文章
+  while (result.length < limit && categoryIndex < shuffledCategories.length * 3) {
+    const currentCategory = shuffledCategories[categoryIndex % shuffledCategories.length];
+    const categoryPosts = postsByCategory[currentCategory];
+    
+    if (categoryPosts && categoryPosts.length > 0) {
+      // 从当前分类中随机选择一篇文章
+      const randomIndex = Math.floor(Math.random() * categoryPosts.length);
+      const selectedPost = categoryPosts.splice(randomIndex, 1)[0];
+      result.push(selectedPost);
+    }
+    
+    categoryIndex++;
+  }
+  
+  return result;
+}
+
+// 工具函数：获取混合的相关文章（包含当前分类和其他分类）
+function getMixedRelatedPosts(allPosts: Post[], currentPost: Post, originalRelated: Post[], limit: number): Post[] {
+  // 先取一部分原始相关文章（同分类）
+  const sameCategory = originalRelated.slice(0, Math.ceil(limit / 2));
+  
+  // 再从其他分类中获取文章
+  const otherCategoryPosts = allPosts.filter(post => 
+    post.id !== currentPost.id && 
+    post.categoryName !== currentPost.categoryName &&
+    !sameCategory.some(related => related.id === post.id)
+  );
+  
+  // 随机选择其他分类的文章
+  const shuffledOthers = [...otherCategoryPosts].sort(() => Math.random() - 0.5);
+  const otherCategory = shuffledOthers.slice(0, limit - sameCategory.length);
+  
+  // 合并并打乱顺序
+  const mixed = [...sameCategory, ...otherCategory];
+  return mixed.sort(() => Math.random() - 0.5);
+}
+
 export default function RecommendationSidebar({ 
   currentPost, 
   relatedPosts, 
@@ -24,20 +84,23 @@ export default function RecommendationSidebar({
     });
   };
 
-  // Get popular posts (based on creation time desc, excluding current post)
+  // 获取所有文章
   const allPosts = getAllPosts();
-  const popularPosts = allPosts
-    .filter(post => post.id !== currentPost.id)
-    .slice(0, 5);
+  
+  // 获取混合的相关文章（包含当前分类和其他分类）
+  const mixedRelatedPosts = getMixedRelatedPosts(allPosts, currentPost, relatedPosts, 4);
+  
+  // 获取来自不同分类的热门文章
+  const diversifiedPopularPosts = getDiversifiedPosts(allPosts, currentPost, 5);
 
   return (
     <aside className={`${styles.sidebar} ${!isFixed ? styles.sidebarUnfixed : ''}`}>
       {/* Related Articles */}
-      {relatedPosts.length > 0 && (
+      {mixedRelatedPosts.length > 0 && (
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>Related Articles</h3>
           <div className={styles.postList}>
-            {relatedPosts.map((post) => (
+            {mixedRelatedPosts.map((post) => (
               <a key={post.id} href={`/post/${post.slug}`} className={styles.postItem}>
                 <div className={styles.postImage}>
                   <Image
@@ -65,7 +128,7 @@ export default function RecommendationSidebar({
       <div className={styles.section}>
         <h3 className={styles.sectionTitle}>Popular Articles</h3>
         <div className={styles.postList}>
-          {popularPosts.map((post, index) => (
+          {diversifiedPopularPosts.map((post, index) => (
             <a key={post.id} href={`/post/${post.slug}`} className={styles.postItem}>
               <div className={styles.postRank}>
                 <span className={styles.rankNumber}>{index + 1}</span>
