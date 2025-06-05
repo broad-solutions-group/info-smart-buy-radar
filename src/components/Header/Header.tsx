@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -137,10 +138,13 @@ export default function Header({ categories, currentCategory }: HeaderProps) {
           {/* Logo */}
           <div className={styles.logo}>
             <a href="/">
-              <svg className={styles.logoIcon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-                <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2" fill="none"/>
-              </svg>
+              <Image 
+                src="/logo.svg" 
+                alt="SmartBuyRadar Logo" 
+                width={38}
+                height={38}
+                className={styles.logoIcon}
+              />
             </a>
             <a href="/">
               <h1 className={styles.logoText}>SmartBuyRadar</h1>
