@@ -226,12 +226,28 @@
 
 /* Fixed sidebar styles */
 .contentWrapperUnfixed {
-  /* Styles when sidebar is not fixed */
+  /* 当侧边栏不固定时的样式调整 */
+  position: relative;
+  min-height: calc(100vh - 90px);
 }
 
 .contentWrapperUnfixed .article {
   max-width: 100% !important;
   margin-right: 0 !important;
+}
+
+/* PC端特殊处理 */
+@media (min-width: 1025px) {
+  .contentWrapperUnfixed {
+    /* 为绝对定位的侧边栏提供定位上下文 */
+    position: relative;
+  }
+  
+  .contentWrapperUnfixed .article {
+    /* 在PC端保持原有的最大宽度，确保与侧边栏的间距 */
+    max-width: calc(1200px - 340px - 4.5rem) !important;
+    margin-right: 2.5rem !important;
+  }
 }
 
 .articleHeader {

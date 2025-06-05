@@ -23,26 +23,39 @@ export default function PostPageClient({ post, relatedPosts, categories }: PostP
 
   useEffect(() => {
     const handleScroll = () => {
+      // 只在PC端处理侧边栏固定逻辑
+      if (window.innerWidth <= 1024) {
+        setSidebarFixed(true);
+        return;
+      }
+
       const footer = document.querySelector('footer');
-      const article = document.querySelector('article');
+      const sidebar = document.querySelector('aside');
       
-      if (!footer || !article) return;
+      if (!footer || !sidebar) return;
 
       const footerRect = footer.getBoundingClientRect();
-      const articleRect = article.getBoundingClientRect();
+      const sidebarRect = sidebar.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // 当文章底部距离视口底部小于100px，或者页脚进入视口时，取消固定
-      const shouldUnfix = (articleRect.bottom - windowHeight < 100) || (footerRect.top < windowHeight);
+      // 计算侧边栏底部到页脚顶部的距离
+      const sidebarBottom = sidebarRect.bottom;
+      const footerTop = footerRect.top;
+      
+      // 当侧边栏底部距离页脚顶部小于20px时，取消固定定位
+      // 这样可以防止侧边栏与页脚重叠，同时保持侧边栏可见
+      const shouldUnfix = (sidebarBottom + 20) > footerTop && footerTop < windowHeight;
       
       setSidebarFixed(!shouldUnfix);
     };
 
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
     handleScroll(); // 初始检查
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
