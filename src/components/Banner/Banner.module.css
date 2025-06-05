@@ -386,8 +386,53 @@
     gap: 1rem;
   }
   
+  /* 移动端显示导航箭头，但调整样式 */
   .navArrows {
-    display: none;
+    display: flex;
+    padding: 0 0.5rem;
+  }
+  
+  .navArrow {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  .navArrow:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+  
+  .navArrow:active {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0.95);
+  }
+  
+  .navArrow:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .navArrow svg {
+    width: 24px;
+    height: 24px;
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.6));
+  }
+  
+  .navArrow:hover svg {
+    transform: scale(1.1);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
   }
   
   .dot {
@@ -455,6 +500,53 @@
     flex-direction: row;
     align-items: center;
     gap: 0.75rem;
+  }
+  
+  /* 小屏幕移动端的导航箭头样式 */
+  .navArrows {
+    padding: 0 0.25rem;
+  }
+  
+  .navArrow {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  .navArrow:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  .navArrow:active {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0.95);
+  }
+  
+  .navArrow:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .navArrow svg {
+    width: 20px;
+    height: 20px;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.7));
+  }
+  
+  .navArrow:hover svg {
+    transform: scale(1.05);
+    filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.9));
   }
   
   .dot {
