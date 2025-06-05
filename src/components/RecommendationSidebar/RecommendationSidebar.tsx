@@ -10,7 +10,7 @@ interface RecommendationSidebarProps {
   isFixed?: boolean;
 }
 
-// 工具函数：获取来自不同分类的文章
+// 工具函数：使用确定性方法获取来自不同分类的文章
 function getDiversifiedPosts(allPosts: Post[], currentPost: Post, limit: number): Post[] {
   // 过滤掉当前文章
   const availablePosts = allPosts.filter(post => post.id !== currentPost.id);
@@ -24,22 +24,21 @@ function getDiversifiedPosts(allPosts: Post[], currentPost: Post, limit: number)
     return acc;
   }, {} as Record<string, Post[]>);
   
-  // 获取所有分类名称并打乱顺序
-  const categoryNames = Object.keys(postsByCategory);
-  const shuffledCategories = [...categoryNames].sort(() => Math.random() - 0.5);
+  // 获取所有分类名称并按字母顺序排序（确定性）
+  const categoryNames = Object.keys(postsByCategory).sort();
   
   const result: Post[] = [];
   let categoryIndex = 0;
   
   // 轮流从不同分类中选择文章
-  while (result.length < limit && categoryIndex < shuffledCategories.length * 3) {
-    const currentCategory = shuffledCategories[categoryIndex % shuffledCategories.length];
+  while (result.length < limit && categoryIndex < categoryNames.length * 3) {
+    const currentCategory = categoryNames[categoryIndex % categoryNames.length];
     const categoryPosts = postsByCategory[currentCategory];
     
     if (categoryPosts && categoryPosts.length > 0) {
-      // 从当前分类中随机选择一篇文章
-      const randomIndex = Math.floor(Math.random() * categoryPosts.length);
-      const selectedPost = categoryPosts.splice(randomIndex, 1)[0];
+      // 使用确定性方法选择文章（基于当前文章ID和索引）
+      const selectIndex = (currentPost.id + categoryIndex) % categoryPosts.length;
+      const selectedPost = categoryPosts.splice(selectIndex, 1)[0];
       result.push(selectedPost);
     }
     
@@ -61,13 +60,13 @@ function getMixedRelatedPosts(allPosts: Post[], currentPost: Post, originalRelat
     !sameCategory.some(related => related.id === post.id)
   );
   
-  // 随机选择其他分类的文章
-  const shuffledOthers = [...otherCategoryPosts].sort(() => Math.random() - 0.5);
-  const otherCategory = shuffledOthers.slice(0, limit - sameCategory.length);
+  // 使用确定性方法选择其他分类的文章
+  const otherCategory = otherCategoryPosts
+    .sort((a, b) => a.id - b.id) // 按ID排序确保一致性
+    .slice(0, limit - sameCategory.length);
   
-  // 合并并打乱顺序
-  const mixed = [...sameCategory, ...otherCategory];
-  return mixed.sort(() => Math.random() - 0.5);
+  // 合并结果，不再随机打乱
+  return [...sameCategory, ...otherCategory];
 }
 
 export default function RecommendationSidebar({ 

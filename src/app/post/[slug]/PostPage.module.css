@@ -142,24 +142,85 @@
   color: #374151;
 }
 
+/* 让marked使用默认的HTML标签样式，只做基础的样式重置 */
+.content h1,
 .content h2,
-.heading {
-  font-size: 1.875rem;
-  font-weight: 600;
-  color: #111827;
-  margin: 2rem 0 1rem 0;
-  line-height: 1.3;
-}
-
 .content h3,
-.subheading {
-  font-size: 1.5rem;
-  font-weight: 600;
+.content h4,
+.content h5,
+.content h6 {
   color: #111827;
-  margin: 1.5rem 0 0.75rem 0;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
   line-height: 1.3;
 }
 
+.content h1 {
+  font-size: 2rem;
+}
+
+.content h2 {
+  font-size: 1.75rem;
+}
+
+.content h3 {
+  font-size: 1.5rem;
+}
+
+.content p {
+  margin-bottom: 1.5rem;
+}
+
+.content strong {
+  font-weight: 700;
+  color: #111827;
+}
+
+.content em {
+  font-style: italic;
+}
+
+.content ul,
+.content ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.content li {
+  margin-bottom: 0.5rem;
+}
+
+.content blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.content code {
+  background-color: #f3f4f6;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+.content pre {
+  background-color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.content pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* 保留这些类以防其他地方还在使用 */
 .paragraph {
   margin-bottom: 1.5rem;
 }

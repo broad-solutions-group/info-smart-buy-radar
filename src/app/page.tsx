@@ -49,14 +49,31 @@ export default function HomePage() {
   // Get featured posts (first 6 posts)
   const featuredPosts = posts.slice(0, 6);
   
-  // Get random posts for "For You" section (exclude featured posts)
-  const getRandomPosts = (count: number) => {
+  // Get diverse posts for "For You" section (exclude featured posts)
+  const getDiversePosts = (count: number) => {
     const availablePosts = posts.slice(6); // Exclude featured posts
-    const shuffled = [...availablePosts].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, count);
+    // 使用确定性方法选择多样化的文章，而不是随机
+    const diversePosts: typeof posts = [];
+    const categoriesUsed = new Set<string>();
+    
+    // 首先尝试从不同分类中各选一篇
+    for (const post of availablePosts) {
+      if (!categoriesUsed.has(post.categoryName) && diversePosts.length < count) {
+        diversePosts.push(post);
+        categoriesUsed.add(post.categoryName);
+      }
+    }
+    
+    // 如果还需要更多文章，按顺序添加剩余文章
+    if (diversePosts.length < count) {
+      const remaining = availablePosts.filter(post => !diversePosts.includes(post));
+      diversePosts.push(...remaining.slice(0, count - diversePosts.length));
+    }
+    
+    return diversePosts;
   };
   
-  const forYouPosts = getRandomPosts(6);
+  const forYouPosts = getDiversePosts(6);
   
   // Get posts by category for sections
   const getPostsByCategory = (categoryName: string, limit: number = 3) => {

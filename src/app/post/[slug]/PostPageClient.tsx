@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { marked } from 'marked';
 import { Post, Category } from '@/lib/slices/postsSlice';
 import { getCategorySlug } from '@/lib/api';
 import Header from '@/components/Header/Header';
@@ -20,6 +21,25 @@ interface PostPageClientProps {
 
 export default function PostPageClient({ post, relatedPosts, categories }: PostPageClientProps) {
   const [sidebarFixed, setSidebarFixed] = useState(true);
+  const [processedContent, setProcessedContent] = useState<string>('');
+
+  useEffect(() => {
+    // 处理文章内容，使用marked进行markdown解析
+    const processContent = async () => {
+      if (post.content) {
+        // 配置marked选项，启用所有markdown功能
+        marked.setOptions({
+          breaks: true, // 支持换行符转换为<br>
+          gfm: true, // 启用GitHub风格的markdown
+        });
+        
+        const htmlContent = await marked(post.content);
+        setProcessedContent(htmlContent);
+      }
+    };
+
+    processContent();
+  }, [post.content]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -149,49 +169,10 @@ export default function PostPageClient({ post, relatedPosts, categories }: PostP
                   </div>
                 )}
 
-                <div className={styles.content}>
-                  {post.content.split('\n').map((paragraph, index) => {
-                    if (paragraph.trim() === '') return null;
-                    
-                    if (paragraph.startsWith('### ')) {
-                      return (
-                        <h3 key={index} className={styles.subheading}>
-                          {paragraph.replace('### ', '')}
-                        </h3>
-                      );
-                    }
-                    
-                    if (paragraph.startsWith('## ')) {
-                      return (
-                        <h2 key={index} className={styles.heading}>
-                          {paragraph.replace('## ', '')}
-                        </h2>
-                      );
-                    }
-                    
-                    if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-                      return (
-                        <p key={index} className={styles.boldParagraph}>
-                          <strong>{paragraph.replace(/\*\*/g, '')}</strong>
-                        </p>
-                      );
-                    }
-                    
-                    if (paragraph.startsWith('- ')) {
-                      return (
-                        <ul key={index} className={styles.list}>
-                          <li>{paragraph.replace('- ', '')}</li>
-                        </ul>
-                      );
-                    }
-                    
-                    return (
-                      <p key={index} className={styles.paragraph}>
-                        {paragraph}
-                      </p>
-                    );
-                  })}
-                </div>
+                <div 
+                  className={styles.content}
+                  dangerouslySetInnerHTML={{ __html: processedContent }}
+                />
               </div>
             </article>
 
