@@ -20,7 +20,7 @@
 .article {
   flex: 1;
   max-width: calc(1200px - 340px - 4.5rem);
-  margin-top: 2rem;
+  margin-top: 1.5rem; /* 减小顶部间距 */
 }
 
 .articleContent {
