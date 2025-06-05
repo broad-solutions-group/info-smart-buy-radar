@@ -133,7 +133,7 @@ export default function SearchPageContent() {
           {loading && (
             <div className={styles.loading}>
               <div className={styles.spinner}></div>
-              <p>Searching for &ldquo;{searchQuery}&rdquo;...</p>
+              <p>Searching for "{searchQuery}"...</p>
               <p className={styles.loadingSubtext}>Finding the best articles for you</p>
             </div>
           )}
@@ -144,8 +144,8 @@ export default function SearchPageContent() {
               <div className={styles.resultsHeader}>
                 <h2 className={styles.resultsTitle}>
                   {searchResults.length > 0 
-                    ? `Found ${searchResults.length} result${searchResults.length !== 1 ? 's' : ''} for &ldquo;${searchQuery}&rdquo;`
-                    : `No results found for &ldquo;${searchQuery}&rdquo;`
+                    ? `Found ${searchResults.length} result${searchResults.length !== 1 ? 's' : ''} for "${searchQuery}"`
+                    : `No results found for "${searchQuery}"`
                   }
                 </h2>
                 {searchResults.length === 0 && (
