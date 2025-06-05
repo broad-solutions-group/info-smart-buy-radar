@@ -182,7 +182,8 @@
 @media (max-width: 1024px) {
   .contentWrapper {
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
+    padding-bottom: 1rem;
   }
   
   .article {
@@ -198,6 +199,7 @@
   }
   
   .articleContent {
+    margin-bottom: 0;
     padding: 1.5rem;
   }
   
