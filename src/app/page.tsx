@@ -46,13 +46,82 @@ export default function HomePage() {
     );
   }
 
-  // Get featured posts (first 6 posts)
-  const featuredPosts = posts.slice(0, 6);
+  // 收集所有已在其他模块中显示的文章ID，避免重复
+  const usedPostIds = new Set<number>();
   
-  // Get diverse posts for "For You" section (exclude featured posts)
+  // 先收集分类展示会用到的文章ID
+  const categoryDisplayIds = new Set<number>();
+  categories.forEach(category => {
+    const categoryPosts = posts.filter(post => post.categoryName === category.name);
+    categoryPosts.slice(0, 3).forEach(post => categoryDisplayIds.add(post.id));
+  });
+  
+  // Get banner posts - 轮播专用文章（每个分类选1篇，总共4篇）
+  const getBannerPosts = () => {
+    const bannerPosts: typeof posts = [];
+    
+    // 从每个分类的第4篇开始选择（避免与分类展示重复）
+    categories.forEach(category => {
+      const categoryPosts = posts.filter(post => post.categoryName === category.name);
+      if (categoryPosts.length > 3) {
+        // 选择第4篇作为轮播文章
+        const bannerPost = categoryPosts[3];
+        bannerPosts.push(bannerPost);
+        usedPostIds.add(bannerPost.id);
+      }
+    });
+    
+    return bannerPosts;
+  };
+  
+  const bannerPosts = getBannerPosts();
+  
+  // Get featured posts - Featured Articles专用文章（6篇，避免与轮播和分类展示重复）
+  const getFeaturedPosts = (count: number) => {
+    const featuredPosts: typeof posts = [];
+    
+    // 从每个分类的第5篇开始选择（避免与轮播和分类展示重复）
+    categories.forEach(category => {
+      const categoryPosts = posts.filter(post => post.categoryName === category.name);
+      if (categoryPosts.length > 4 && featuredPosts.length < count) {
+        // 从第5篇开始选择
+        const availablePosts = categoryPosts.slice(4);
+        if (availablePosts.length > 0) {
+          featuredPosts.push(availablePosts[0]);
+          usedPostIds.add(availablePosts[0].id);
+        }
+      }
+    });
+    
+    // 如果还需要更多文章，从剩余文章中选择（排除已使用和分类展示的文章）
+    if (featuredPosts.length < count) {
+      const remainingPosts = posts.filter(post => 
+        !usedPostIds.has(post.id) && !categoryDisplayIds.has(post.id)
+      );
+      const needed = count - featuredPosts.length;
+      featuredPosts.push(...remainingPosts.slice(0, needed));
+      remainingPosts.slice(0, needed).forEach(post => usedPostIds.add(post.id));
+    }
+    
+    return featuredPosts;
+  };
+  
+  const featuredPosts = getFeaturedPosts(6);
+  
+  // Get diverse posts for "For You" section (exclude featured posts and category display posts)
   const getDiversePosts = (count: number) => {
-    const availablePosts = posts.slice(6); // Exclude featured posts
-    // 使用确定性方法选择多样化的文章，而不是随机
+    // 排除已使用的文章和分类展示的前3篇
+    const categoryDisplayIds = new Set<number>();
+    categories.forEach(category => {
+      const categoryPosts = posts.filter(post => post.categoryName === category.name);
+      categoryPosts.slice(0, 3).forEach(post => categoryDisplayIds.add(post.id));
+    });
+    
+    const availablePosts = posts.filter(post => 
+      !usedPostIds.has(post.id) && !categoryDisplayIds.has(post.id)
+    );
+    
+    // 使用确定性方法选择多样化的文章
     const diversePosts: typeof posts = [];
     const categoriesUsed = new Set<string>();
     
@@ -61,13 +130,16 @@ export default function HomePage() {
       if (!categoriesUsed.has(post.categoryName) && diversePosts.length < count) {
         diversePosts.push(post);
         categoriesUsed.add(post.categoryName);
+        usedPostIds.add(post.id);
       }
     }
     
     // 如果还需要更多文章，按顺序添加剩余文章
     if (diversePosts.length < count) {
       const remaining = availablePosts.filter(post => !diversePosts.includes(post));
-      diversePosts.push(...remaining.slice(0, count - diversePosts.length));
+      const needed = count - diversePosts.length;
+      diversePosts.push(...remaining.slice(0, needed));
+      remaining.slice(0, needed).forEach(post => usedPostIds.add(post.id));
     }
     
     return diversePosts;
@@ -75,7 +147,7 @@ export default function HomePage() {
   
   const forYouPosts = getDiversePosts(6);
   
-  // Get posts by category for sections
+  // Get posts by category for sections (前3篇文章)
   const getPostsByCategory = (categoryName: string, limit: number = 3) => {
     return posts.filter(post => post.categoryName === categoryName).slice(0, limit);
   };
@@ -87,7 +159,7 @@ export default function HomePage() {
       <Header categories={categories} />
       <main className={styles.main}>
         {/* Hero Banner */}
-        <Banner featuredPosts={featuredPosts} />
+        <Banner featuredPosts={bannerPosts} />
 
         {/* 广告位 - 使用组件化设计 */}
         <AdPlaceholder 
