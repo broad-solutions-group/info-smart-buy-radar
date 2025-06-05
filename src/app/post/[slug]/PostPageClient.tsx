@@ -31,30 +31,53 @@ export default function PostPageClient({ post, relatedPosts, categories }: PostP
 
       const footer = document.querySelector('footer');
       const sidebar = document.querySelector('aside');
+      const main = document.querySelector('main');
       
-      if (!footer || !sidebar) return;
+      if (!footer || !sidebar || !main) return;
 
       const footerRect = footer.getBoundingClientRect();
       const sidebarRect = sidebar.getBoundingClientRect();
+      const mainRect = main.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // 计算侧边栏底部到页脚顶部的距离
-      const sidebarBottom = sidebarRect.bottom;
+      // 计算各种距离
       const footerTop = footerRect.top;
+      const sidebarBottom = sidebarRect.bottom;
+      const mainBottom = mainRect.bottom;
+      const scrollY = window.scrollY;
       
-      // 当侧边栏底部距离页脚顶部小于20px时，取消固定定位
-      // 这样可以防止侧边栏与页脚重叠，同时保持侧边栏可见
-      const shouldUnfix = (sidebarBottom + 20) > footerTop && footerTop < windowHeight;
+      // 更精确的判断逻辑：
+      // 1. 当footer即将进入视口时（提前100px开始处理）
+      // 2. 当main容器底部接近视口底部时
+      // 3. 考虑侧边栏的实际高度，确保有足够空间
+      const footerApproaching = footerTop < windowHeight + 100;
+      const mainNearEnd = mainBottom < windowHeight + 50;
+      const sidebarWouldOverlap = sidebarBottom > footerTop - 40;
+      
+      // 只有当footer真正接近且可能发生重叠时才取消固定
+      const shouldUnfix = footerApproaching && (mainNearEnd || sidebarWouldOverlap);
       
       setSidebarFixed(!shouldUnfix);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // 使用节流来优化性能
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll);
     window.addEventListener('resize', handleScroll);
     handleScroll(); // 初始检查
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledHandleScroll);
       window.removeEventListener('resize', handleScroll);
     };
   }, []);

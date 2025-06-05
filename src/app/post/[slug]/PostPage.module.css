@@ -20,7 +20,6 @@
 .article {
   flex: 1;
   max-width: calc(1200px - 340px - 4.5rem);
-  margin-right: 2.5rem;
   margin-top: 2rem;
 }
 
@@ -248,7 +247,6 @@
   .contentWrapperUnfixed .article {
     /* 在PC端保持原有的最大宽度，确保与侧边栏的间距 */
     max-width: calc(1200px - 340px - 4.5rem) !important;
-    margin-right: 2.5rem !important;
   }
 }
 

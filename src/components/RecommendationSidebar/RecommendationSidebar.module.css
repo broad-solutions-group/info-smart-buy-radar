@@ -334,15 +334,17 @@
   .sidebarUnfixed {
     position: absolute !important;
     top: auto !important;
-    bottom: 20px !important; /* 距离页脚20px */
+    bottom: 32px !important; /* 距离页脚60px，确保不遮盖footer */
     right: calc((100vw - 1200px) / 2 + 1.5rem) !important;
     width: 340px !important;
     height: auto !important;
-    max-height: calc(100vh - 200px) !important; /* 限制最大高度，避免超出视口 */
+    max-height: calc(100vh - 160px) !important; /* 调整最大高度，为footer留出更多空间 */
     overflow-y: auto !important;
     z-index: 10 !important;
     /* 添加平滑过渡效果 */
     transition: all 0.3s ease !important;
+    /* 确保侧边栏在main容器内 */
+    transform: translateY(0) !important;
   }
 }
 
