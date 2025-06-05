@@ -89,27 +89,11 @@ Follow us on social media for daily deals, quick tips, and breaking shopping new
       <Header categories={categories} />
       <main className={styles.main}>
         <div className={styles.container}>
-          <div className={styles.contentGrid}>
-            <div className={styles.contentMain}>
-              <div 
-                className={styles.contentBody}
-                dangerouslySetInnerHTML={{ __html: aboutContent }}
-              />
-            </div>
-            <div className={styles.contentSidebar}>
-              <div className={styles.sidebarCard}>
-                <h3>Our Mission</h3>
-                <p>Helping you make informed shopping decisions that save money and time.</p>
-              </div>
-              <div className={styles.sidebarCard}>
-                <h3>Expert Team</h3>
-                <p>Consumer research specialists with years of retail analysis experience.</p>
-              </div>
-              <div className={styles.sidebarCard}>
-                <h3>Always Current</h3>
-                <p>We stay updated with the latest trends, deals, and consumer protection info.</p>
-              </div>
-            </div>
+          <div className={styles.contentMain}>
+            <div 
+              className={styles.contentBody}
+              dangerouslySetInnerHTML={{ __html: aboutContent }}
+            />
           </div>
         </div>
       </main>
