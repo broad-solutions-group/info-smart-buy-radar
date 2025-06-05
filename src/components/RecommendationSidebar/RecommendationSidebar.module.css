@@ -299,10 +299,10 @@
 @media (min-width: 1025px) {
   .sidebar {
     position: fixed;
-    top: 90px; /* Header高度 + 一些间距 */
+    top: 102px; /* Header高度(70px) + article的margin-top(2rem=32px) */
     right: calc((100vw - 1200px) / 2 + 1.5rem); /* 增加右侧间距，避免与主内容重叠 */
     width: 340px;
-    height: calc(100vh - 110px); /* 减去顶部间距 */
+    height: calc(100vh - 122px); /* 减去顶部间距(70px + 32px + 20px余量) */
     overflow-y: auto;
     overflow-x: hidden;
     /* 隐藏滚动条但保持滚动功能 */

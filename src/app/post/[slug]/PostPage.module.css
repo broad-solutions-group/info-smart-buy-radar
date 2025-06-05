@@ -1,7 +1,7 @@
 /* Post Page Styles */
 .main {
-  margin-top: 90px;
-  min-height: calc(100vh - 90px);
+  margin-top: 70px; /* 减少margin-top，避免过多白色背景 */
+  min-height: calc(100vh - 70px);
   background-color: #f8f9fa;
 }
 
@@ -21,6 +21,7 @@
   flex: 1;
   max-width: calc(1200px - 340px - 4.5rem);
   margin-right: 2.5rem;
+  margin-top: 2rem;
 }
 
 .articleContent {
@@ -188,6 +189,7 @@
   .article {
     max-width: 100%;
     margin-right: 0;
+    margin-top: 0; /* 移动端重置顶部间距 */
   }
 }
 
