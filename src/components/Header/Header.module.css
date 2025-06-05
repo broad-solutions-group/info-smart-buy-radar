@@ -392,11 +392,6 @@
   .logoText {
     font-size: 1.25rem;
   }
-  
-  .logoIcon {
-    width: 28px;
-    height: 28px;
-  }
 
   /* 隐藏移动端的搜索容器 */
   .searchContainer {
