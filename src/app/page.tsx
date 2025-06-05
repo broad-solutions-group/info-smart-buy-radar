@@ -60,14 +60,23 @@ export default function HomePage() {
   const getBannerPosts = () => {
     const bannerPosts: typeof posts = [];
     
-    // 从每个分类的第4篇开始选择（避免与分类展示重复）
+    // 首先添加指定的文章到第一个位置
+    const targetPost = posts.find(post => post.id === 107);
+    if (targetPost) {
+      bannerPosts.push(targetPost);
+      usedPostIds.add(targetPost.id);
+    }
+    
+    // 从每个分类的第4篇开始选择（避免与分类展示重复和已选择的文章重复）
     categories.forEach(category => {
       const categoryPosts = posts.filter(post => post.categoryName === category.name);
       if (categoryPosts.length > 3) {
-        // 选择第4篇作为轮播文章
+        // 选择第4篇作为轮播文章，但跳过已经添加的文章
         const bannerPost = categoryPosts[3];
-        bannerPosts.push(bannerPost);
-        usedPostIds.add(bannerPost.id);
+        if (!usedPostIds.has(bannerPost.id)) {
+          bannerPosts.push(bannerPost);
+          usedPostIds.add(bannerPost.id);
+        }
       }
     });
     
