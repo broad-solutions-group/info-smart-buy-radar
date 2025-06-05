@@ -93,7 +93,7 @@ export default function PostPageClient({ post, relatedPosts, categories }: PostP
 
   return (
     <>
-      <Header categories={categories} />
+      <Header categories={categories} currentCategory={post.categoryName} />
       <main className={`${styles.main} ${!sidebarFixed ? styles.contentWrapperUnfixed : ''}`}>
         <div className={styles.container}>
           <div className={styles.contentWrapper}>

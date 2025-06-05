@@ -9,9 +9,10 @@ interface HeaderProps {
     id: number
     name: string
   }>
+  currentCategory?: string // 新增：当前文章的分类名称，用于文章详情页的菜单高亮
 }
 
-export default function Header({ categories }: HeaderProps) {
+export default function Header({ categories, currentCategory }: HeaderProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -102,7 +103,18 @@ export default function Header({ categories }: HeaderProps) {
     if (path.startsWith('/category/')) {
       const normalizedPathname = pathname.replace(/\/$/, '') // 移除尾部斜杠
       const normalizedPath = path.replace(/\/$/, '') // 移除尾部斜杠
-      return normalizedPathname === normalizedPath
+      
+      // 直接路径匹配
+      if (normalizedPathname === normalizedPath) {
+        return true
+      }
+      
+      // 文章详情页的分类高亮：如果当前在文章详情页，且文章属于该分类
+      if (pathname.startsWith('/post/') && currentCategory) {
+        const categorySlug = getCategorySlug(currentCategory)
+        const expectedCategoryPath = `/category/${categorySlug}`
+        return normalizedPath === expectedCategoryPath
+      }
     }
     
     return false
