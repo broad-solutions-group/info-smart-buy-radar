@@ -3,13 +3,14 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from '../components/Providers';
 import AppLoader from '../components/AppLoader/AppLoader';
+import { siteData } from '../lib/api';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Smart Buy Radar - Your Guide to Smart Shopping",
   description: "Discover seasonal picks, budget upgrades, coupon hacks, and renter essentials. Smart Buy Radar helps you make informed purchasing decisions all year round.",
-  keywords: "smart shopping, seasonal deals, budget upgrades, coupon hacks, renter essentials, buying guide",
+  keywords: siteData.keywords,
   authors: [{ name: "Smart Buy Radar" }],
   openGraph: {
     title: "Smart Buy Radar - Your Guide to Smart Shopping",
