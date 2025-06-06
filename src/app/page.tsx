@@ -22,8 +22,8 @@ export default function HomePage() {
     const loadData = async () => {
       try {
         setLoading(true);
-        const allPosts = getAllPosts();
-        const allCategories = getCategories();
+        const allPosts = await getAllPosts();
+        const allCategories = await getCategories();
         
         setPosts(allPosts);
         setCategories(allCategories);

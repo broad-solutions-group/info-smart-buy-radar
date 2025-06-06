@@ -21,24 +21,31 @@ export default function SearchPageContent() {
   const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {
-    const allCategories = getCategories();
-    setCategories(allCategories);
+    const loadData = async () => {
+      try {
+        const allCategories = await getCategories();
+        setCategories(allCategories);
 
-    // Get initial search query from URL params
-    const query = searchParams?.get('q') || '';
-    if (query) {
-      setSearchQuery(query);
-      // 立即设置加载状态，提供即时反馈
-      setLoading(true);
-      setHasSearched(true);
-      // 使用setTimeout确保UI更新后再执行搜索
-      setTimeout(() => {
-        performSearch(query);
-      }, 0);
-    }
+        // Get initial search query from URL params
+        const query = searchParams?.get('q') || '';
+        if (query) {
+          setSearchQuery(query);
+          // 立即设置加载状态，提供即时反馈
+          setLoading(true);
+          setHasSearched(true);
+          // 使用setTimeout确保UI更新后再执行搜索
+          setTimeout(() => {
+            performSearch(query);
+          }, 0);
+        }
+      } catch (error) {
+        console.error('Error loading categories:', error);
+      }
+    };
+    loadData();
   }, [searchParams]);
 
-  const performSearch = (query: string) => {
+  const performSearch = async (query: string) => {
     if (!query.trim()) {
       setSearchResults([]);
       setHasSearched(false);
@@ -52,7 +59,7 @@ export default function SearchPageContent() {
     try {
       // 添加最小延迟，确保用户能看到加载状态
       const startTime = Date.now();
-      const results = searchPosts(query.trim());
+      const results = await searchPosts(query.trim());
       
       const elapsed = Date.now() - startTime;
       const minDelay = 300; // 最小300ms延迟

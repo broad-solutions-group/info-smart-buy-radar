@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { Post, Category } from '@/lib/slices/postsSlice';
 import { getCategorySlug, getAllPosts } from '@/lib/api';
 import styles from './RecommendationSidebar.module.css';
@@ -75,6 +76,31 @@ export default function RecommendationSidebar({
   categories,
   isFixed = true
 }: RecommendationSidebarProps) {
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
+  const [mixedRelatedPosts, setMixedRelatedPosts] = useState<Post[]>([]);
+  const [diversifiedPopularPosts, setDiversifiedPopularPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const loadPosts = async () => {
+      try {
+        const posts = await getAllPosts();
+        setAllPosts(posts);
+        
+        // 获取混合的相关文章（包含当前分类和其他分类）
+        const mixedPosts = getMixedRelatedPosts(posts, currentPost, relatedPosts, 4);
+        setMixedRelatedPosts(mixedPosts);
+        
+        // 获取来自不同分类的热门文章
+        const diversifiedPosts = getDiversifiedPosts(posts, currentPost, 5);
+        setDiversifiedPopularPosts(diversifiedPosts);
+      } catch (error) {
+        console.error('Error loading posts:', error);
+      }
+    };
+
+    loadPosts();
+  }, [currentPost, relatedPosts]);
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -82,15 +108,6 @@ export default function RecommendationSidebar({
       day: 'numeric'
     });
   };
-
-  // 获取所有文章
-  const allPosts = getAllPosts();
-  
-  // 获取混合的相关文章（包含当前分类和其他分类）
-  const mixedRelatedPosts = getMixedRelatedPosts(allPosts, currentPost, relatedPosts, 4);
-  
-  // 获取来自不同分类的热门文章
-  const diversifiedPopularPosts = getDiversifiedPosts(allPosts, currentPost, 5);
 
   return (
     <aside className={`${styles.sidebar} ${!isFixed ? styles.sidebarUnfixed : ''}`}>

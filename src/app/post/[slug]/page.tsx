@@ -9,22 +9,22 @@ interface PostPageProps {
 }
 
 export async function generateStaticParams() {
-  const paths = getAllPostPaths();
+  const paths = await getAllPostPaths();
   return paths.map((path) => ({
     slug: path.params.slug,
   }));
 }
 
-export default function PostPage({ params }: PostPageProps) {
+export default async function PostPage({ params }: PostPageProps) {
   const { slug } = params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
-  const relatedPosts = getRelatedPosts(post, 5);
-  const categories = getCategories();
+  const relatedPosts = await getRelatedPosts(post, 5);
+  const categories = await getCategories();
 
   return (
     <PostPageClient 

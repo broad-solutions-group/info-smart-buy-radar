@@ -4,7 +4,7 @@ import CategoryPageClient from './CategoryPageClient';
 
 // 生成静态参数
 export async function generateStaticParams() {
-  const categories = getCategories();
+  const categories = await getCategories();
   
   return categories.map((category) => ({
     category: category.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, ''),
@@ -17,10 +17,10 @@ interface CategoryPageProps {
   };
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
+export default async function CategoryPage({ params }: CategoryPageProps) {
   const categorySlug = params.category;
-  const posts = getPostsByCategory(categorySlug);
-  const categories = getCategories();
+  const posts = await getPostsByCategory(categorySlug);
+  const categories = await getCategories();
   
   let categoryName = '';
   if (posts.length > 0) {

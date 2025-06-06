@@ -11,8 +11,15 @@ export default function NotFound() {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    const allCategories = getCategories();
-    setCategories(allCategories);
+    const loadCategories = async () => {
+      try {
+        const allCategories = await getCategories();
+        setCategories(allCategories);
+      } catch (error) {
+        console.error('Error loading categories:', error);
+      }
+    };
+    loadCategories();
   }, []);
 
   return (
