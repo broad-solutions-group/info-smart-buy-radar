@@ -7,9 +7,10 @@ import { Category } from '@/lib/slices/postsSlice';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import styles from './About.module.css';
+import attachmentData from '@/data/Smart-Buy-Radar-attachment.json';
 
-// CDN数据源
-const ATTACHMENT_DATA_URL = 'https://cdn-info.broadsolutionsgroup.com/articles/website-16/Smart-Buy-Radar-attachment.json';
+// 备用API端点
+const ATTACHMENT_DATA_URL = '/api/attachment-data';
 
 export default function AboutPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -22,26 +23,36 @@ export default function AboutPage() {
         const allCategories = await getCategories();
         setCategories(allCategories);
 
-        // 获取attachment数据
-        const response = await fetch(ATTACHMENT_DATA_URL);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch attachment data: ${response.status}`);
-        }
-        const attachmentData = await response.json() as { about?: string };
-
-        // Process about content with marked - 严格使用CDN数据
+        // 优先使用本地attachment数据
         if (attachmentData.about && attachmentData.about.trim()) {
           const htmlContent = await marked(attachmentData.about);
           setAboutContent(htmlContent);
         } else {
-          // 如果CDN中的about字段为空，显示简单消息
-          const emptyContent = `
+          // 如果本地数据中的about字段为空，尝试从API获取
+          try {
+            const response = await fetch(ATTACHMENT_DATA_URL);
+            if (!response.ok) {
+              throw new Error(`Failed to fetch attachment data: ${response.status}`);
+            }
+            const apiAttachmentData = await response.json() as { about?: string };
+            
+            if (apiAttachmentData.about && apiAttachmentData.about.trim()) {
+              const htmlContent = await marked(apiAttachmentData.about);
+              setAboutContent(htmlContent);
+            } else {
+              throw new Error('No about content available');
+            }
+          } catch (apiError) {
+            console.error('Error fetching attachment data from API:', apiError);
+            // 显示默认内容
+            const emptyContent = `
 # About Smart Buy Radar
 
 Content is being updated. Please check back later.
-          `;
-          const htmlContent = await marked(emptyContent);
-          setAboutContent(htmlContent);
+            `;
+            const htmlContent = await marked(emptyContent);
+            setAboutContent(htmlContent);
+          }
         }
       } catch (error) {
         console.error('Error loading data:', error);

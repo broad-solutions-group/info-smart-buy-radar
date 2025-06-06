@@ -1,7 +1,8 @@
 import { SiteData, Post, Category } from './slices/postsSlice'
+import siteDataJson from '@/data/Smart-Buy-Radar.json'
 
-// CDN数据源
-const SITE_DATA_URL = 'https://cdn-info.broadsolutionsgroup.com/articles/website-16/Smart-Buy-Radar.json'
+// 本地数据源
+const SITE_DATA_URL = '/api/site-data' // 备用API端点
 
 // 缓存数据
 let cachedSiteData: SiteData | null = null
@@ -13,22 +14,30 @@ async function fetchSiteData(): Promise<SiteData> {
   }
 
   try {
-    const response = await fetch(SITE_DATA_URL)
-    if (!response.ok) {
-      throw new Error(`Failed to fetch site data: ${response.status}`)
-    }
-    const data = await response.json()
-    cachedSiteData = data as SiteData
+    // 优先使用本地数据
+    cachedSiteData = siteDataJson as SiteData
     return cachedSiteData
   } catch (error) {
-    console.error('Error fetching site data:', error)
-    // 返回默认数据结构以防止应用崩溃
-    return {
-      id: 16,
-      name: "Smart Buy Radar",
-      keywords: "smart shopping, seasonal deals, budget upgrades, coupon hacks, renter essentials, buying guide",
-      description: "",
-      categoryList: []
+    console.error('Error loading local site data:', error)
+    // 如果本地数据加载失败，尝试从API获取
+    try {
+      const response = await fetch(SITE_DATA_URL)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch site data: ${response.status}`)
+      }
+      const data = await response.json()
+      cachedSiteData = data as SiteData
+      return cachedSiteData
+    } catch (apiError) {
+      console.error('Error fetching site data from API:', apiError)
+      // 返回默认数据结构以防止应用崩溃
+      return {
+        id: 16,
+        name: "Smart Buy Radar",
+        keywords: "smart shopping, seasonal deals, budget upgrades, coupon hacks, renter essentials, buying guide",
+        description: "",
+        categoryList: []
+      }
     }
   }
 }
