@@ -17,6 +17,39 @@ export default function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [debugInfo, setDebugInfo] = useState({
+    loadAllTaskExists: false,
+    adDocReady: false,
+    lastCheck: new Date().toISOString()
+  });
+
+  // 调试函数：检查 loadAllTask 状态
+  const checkLoadAllTaskStatus = () => {
+    const info = {
+      loadAllTaskExists: typeof window !== 'undefined' && typeof window.loadAllTask === 'function',
+      adDocReady: typeof window !== 'undefined' && window.adDocReady === true,
+      lastCheck: new Date().toISOString()
+    };
+    setDebugInfo(info);
+    console.log('🔍 [HomePage] LoadAllTask Status:', info);
+    return info;
+  };
+
+  // 手动调用 loadAllTask
+  const manuallyCallLoadAllTask = () => {
+    if (typeof window !== 'undefined' && typeof window.loadAllTask === 'function') {
+      try {
+        console.log('🔧 [HomePage] Manually calling loadAllTask');
+        window.loadAllTask();
+        alert('loadAllTask called successfully!');
+      } catch (error) {
+        console.error('🔧 [HomePage] Error calling loadAllTask:', error);
+        alert('Error calling loadAllTask: ' + error);
+      }
+    } else {
+      alert('loadAllTask function is not available');
+    }
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -35,6 +68,16 @@ export default function HomePage() {
     };
 
     loadData();
+
+    // 定期检查 loadAllTask 状态
+    const checkInterval = setInterval(checkLoadAllTaskStatus, 2000);
+    
+    // 初始检查
+    setTimeout(checkLoadAllTaskStatus, 1000);
+
+    return () => {
+      clearInterval(checkInterval);
+    };
   }, []);
 
   if (loading) {
@@ -165,6 +208,53 @@ export default function HomePage() {
     <>
       {/* 客户端副作用组件 */}
       <ClientEffects />
+      
+      {/* 调试面板 - 仅在开发环境显示 */}
+      {/*
+      {process.env.NODE_ENV === 'development' && (
+        <div style={{
+          position: 'fixed',
+          top: '10px',
+          left: '10px',
+          background: '#333',
+          color: 'white',
+          padding: '10px',
+          borderRadius: '5px',
+          fontSize: '12px',
+          zIndex: 9999,
+          fontFamily: 'monospace'
+        }}>
+          <h4 style={{ margin: '0 0 5px 0' }}>🐛 LoadAllTask Debug</h4>
+          <div>LoadAllTask exists: {debugInfo.loadAllTaskExists ? '✅' : '❌'}</div>
+          <div>adDocReady: {debugInfo.adDocReady ? '✅' : '❌'}</div>
+          <div>Last check: {new Date(debugInfo.lastCheck).toLocaleTimeString()}</div>
+          <button 
+            onClick={manuallyCallLoadAllTask}
+            style={{
+              marginTop: '5px',
+              padding: '2px 5px',
+              fontSize: '10px',
+              cursor: 'pointer'
+            }}
+          >
+            Manual Call LoadAllTask
+          </button>
+          <button 
+            onClick={checkLoadAllTaskStatus}
+            style={{
+              marginTop: '2px',
+              marginLeft: '5px',
+              padding: '2px 5px',
+              fontSize: '10px',
+              cursor: 'pointer'
+            }}
+          >
+            Refresh Status
+          </button>
+        </div>
+      )}
+      */}
+      
       <Header categories={categories} />
       <main className={styles.main}>
         {/* Hero Banner */}
