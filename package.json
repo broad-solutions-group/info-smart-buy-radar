@@ -43,7 +43,7 @@
     "deploy": "wrangler deploy",
     "dev": "next dev",
     "lint": "next lint",
-    "postbuild": "opennextjs-cloudflare build -s",
+    "postbuild": "opennextjs-cloudflare build -s && node scripts/generate-sitemap.js",
     "preview": "npm run build && wrangler dev",
     "start": "next start"
   }
