@@ -1,17 +1,17 @@
 {
   "name": "info-smart-buy-radar",
   "description": "Smart Buy Radar",
-  "cloudflare": {
-    "label": "Smart Buy Radar",
-    "products": [
-      "Workers"
-    ],
-    "categories": [],
-    "icon_urls": [
-      "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/5ca0ca32-e897-4699-d4c1-6b680512f000/public"
-    ],
-    "preview_image_url": "https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/e42eec61-db86-49c8-7b29-c3ed4783e400/public",
-    "publish": true
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export",
+    "postbuild": "node scripts/generate-sitemap.js",
+    "deploy": "npm run build && wrangler pages deploy",
+    "deploy:preview": "npm run build && wrangler pages deploy --branch=preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
@@ -26,25 +26,12 @@
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "1.0.0-beta.3",
     "@types/node": "22.15.19",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "cross-env": "^7.0.3",
     "eslint": "8.56.0",
     "eslint-config-next": "14.2.5",
-    "typescript": "5.8.3",
-    "wrangler": "4.16.1"
-  },
-  "scripts": {
-    "build": "cross-env NEXT_PRIVATE_STANDALONE=true next build",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts",
-    "check": "npm run build && tsc && wrangler deploy --dry-run",
-    "deploy": "wrangler deploy",
-    "dev": "next dev",
-    "lint": "next lint",
-    "postbuild": "opennextjs-cloudflare build -s && node scripts/generate-sitemap.js",
-    "preview": "npm run build && wrangler dev",
-    "start": "next start"
+    "typescript": "5.8.3"
   }
 }

@@ -1,0 +1,26 @@
+name = "info-smart-buy-radar"
+compatibility_date = "2024-06-01"
+
+# Cloudflare Pages 配置
+pages_build_output_dir = "out"
+
+# 如需KV、D1、R2等服务，可在此添加绑定
+# [kv_namespaces]
+# binding = "MY_KV"
+# id = "xxxxxx"
+
+# [d1_databases]
+# binding = "MY_D1"
+# database_name = "info-smart-buy-radar"
+# database_id = "xxxxxx"
+
+# [r2_buckets]
+# binding = "MY_R2"
+# bucket_name = "info-smart-buy-radar"
+# bucket_id = "xxxxxx"
+
+[env.production]
+# 生产环境专用配置
+
+[env.preview]
+# 预览环境专用配置 

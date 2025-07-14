@@ -1,0 +1,65 @@
+# 全局安全头
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# 静态资源缓存
+*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+*.gif
+  Cache-Control: public, max-age=31536000, immutable
+
+*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+*.ico
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML页面缓存
+*.html
+  Cache-Control: public, max-age=3600
+
+# 根页面缓存
+/
+  Cache-Control: public, max-age=3600
+
+# 分类页面缓存
+/category/*
+  Cache-Control: public, max-age=3600
+
+# 文章页面缓存
+/post/*
+  Cache-Control: public, max-age=3600
+
+# 搜索页面缓存
+/search
+  Cache-Control: public, max-age=3600
+
+# 静态页面缓存
+/about
+  Cache-Control: public, max-age=86400
+
+/terms
+  Cache-Control: public, max-age=86400
+
+/privacy
+  Cache-Control: public, max-age=86400
+
+# sitemap缓存
+/sitemap.xml
+  Cache-Control: public, max-age=86400 

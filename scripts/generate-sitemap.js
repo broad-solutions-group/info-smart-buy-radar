@@ -3,7 +3,8 @@ const path = require('path');
 
 // 1. 读取数据
 const dataPath = path.join(__dirname, '../src/data/Smart-Buy-Radar.json');
-const outputPath = path.join(__dirname, '../.open-next/assets/sitemap.xml');
+// 修改输出路径为 public/sitemap.xml
+const outputPath = path.join(__dirname, '../public/sitemap.xml');
 const siteUrl = 'https://smartshoppingradar.com';
 
 function getToday() {

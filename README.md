@@ -127,7 +127,36 @@ src/
 
 ## 部署
 
-项目配置为静态站点生成，可以部署到：
+### Cloudflare Pages 部署（推荐）
+
+项目已优化为Cloudflare Pages部署方式：
+
+#### 1. 自动部署
+1. 将代码推送到GitHub仓库
+2. 在Cloudflare Dashboard中创建新的Pages项目
+3. 连接GitHub仓库
+4. 配置构建设置：
+   - **构建命令**: `npm run build`
+   - **构建输出目录**: `out`
+   - **Node.js版本**: 18.x
+
+#### 2. 环境变量（可选）
+```
+NODE_ENV=production
+```
+
+#### 3. 自定义域名
+在Cloudflare Pages设置中配置自定义域名和SSL证书
+
+#### 4. 性能优化
+项目已配置：
+- 静态资源缓存策略（`_headers`文件）
+- 路由重定向规则（`_redirects`文件）
+- 图片优化和CDN加速
+- SEO友好的URL结构
+
+### 其他部署方式
+项目配置为静态站点生成，也可以部署到：
 - Vercel
 - Netlify
 - GitHub Pages

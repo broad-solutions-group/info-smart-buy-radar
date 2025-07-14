@@ -1,0 +1,43 @@
+[build]
+command = "npm run build"
+output_directory = "out"
+
+[build.environment]
+NODE_VERSION = "18"
+
+[site]
+bucket = "out"
+
+[site.redirects]
+# 处理Next.js客户端路由
+"/*" = "/index.html"
+
+[site.headers]
+# 全局安全头
+"/*" = [
+  "X-Frame-Options: DENY",
+  "X-Content-Type-Options: nosniff",
+  "Referrer-Policy: strict-origin-when-cross-origin",
+  "Permissions-Policy: camera=(), microphone=(), geolocation=()"
+]
+
+# 静态资源缓存
+"*.css" = ["Cache-Control: public, max-age=31536000, immutable"]
+"*.js" = ["Cache-Control: public, max-age=31536000, immutable"]
+"*.png" = ["Cache-Control: public, max-age=31536000, immutable"]
+"*.jpg" = ["Cache-Control: public, max-age=31536000, immutable"]
+"*.jpeg" = ["Cache-Control: public, max-age=31536000, immutable"]
+"*.gif" = ["Cache-Control: public, max-age=31536000, immutable"]
+"*.svg" = ["Cache-Control: public, max-age=31536000, immutable"]
+"*.ico" = ["Cache-Control: public, max-age=31536000, immutable"]
+
+# HTML页面缓存
+"*.html" = ["Cache-Control: public, max-age=3600"]
+"/" = ["Cache-Control: public, max-age=3600"]
+"/category/*" = ["Cache-Control: public, max-age=3600"]
+"/post/*" = ["Cache-Control: public, max-age=3600"]
+"/search" = ["Cache-Control: public, max-age=3600"]
+"/about" = ["Cache-Control: public, max-age=86400"]
+"/terms" = ["Cache-Control: public, max-age=86400"]
+"/privacy" = ["Cache-Control: public, max-age=86400"]
+"/sitemap.xml" = ["Cache-Control: public, max-age=86400"] 
