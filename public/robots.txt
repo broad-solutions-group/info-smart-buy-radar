@@ -1,0 +1,23 @@
+# robots.txt for Smart Shopping Radar
+# https://smartshoppingradar.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Disallow admin, API, and test pages
+Disallow: /api/
+Disallow: /test-sdk/
+Disallow: /_next/
+
+# Allow important pages
+Allow: /
+Allow: /category/
+Allow: /post/
+Allow: /search
+Allow: /about
+Allow: /privacy
+Allow: /terms
+
+# Sitemap location
+Sitemap: https://smartshoppingradar.com/sitemap.xml
+
