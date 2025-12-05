@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { marked } from 'marked';
 import { getPostBySlug, getRelatedPosts, getCategories, getAllPostPaths } from '@/lib/api';
 import PostPageClient from './PostPageClient';
 
@@ -26,11 +27,22 @@ export default async function PostPage({ params }: PostPageProps) {
   const relatedPosts = await getRelatedPosts(post, 5);
   const categories = await getCategories();
 
+  // 在服务端处理 markdown 内容，生成 HTML
+  let processedContent = '';
+  if (post.content) {
+    marked.setOptions({
+      breaks: true,
+      gfm: true,
+    });
+    processedContent = await marked(post.content);
+  }
+
   return (
     <PostPageClient 
       post={post} 
       relatedPosts={relatedPosts} 
-      categories={categories} 
+      categories={categories}
+      processedContent={processedContent}
     />
   );
 } 

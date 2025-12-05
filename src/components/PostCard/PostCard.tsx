@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image'
 import styles from './PostCard.module.css'
 import { Post } from '../../lib/slices/postsSlice'

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { marked } from 'marked';
 import { Post, Category } from '@/lib/slices/postsSlice';
 import { getCategorySlug } from '@/lib/api';
 import Header from '@/components/Header/Header';
@@ -17,29 +16,11 @@ interface PostPageClientProps {
   post: Post;
   relatedPosts: Post[];
   categories: Category[];
+  processedContent: string;
 }
 
-export default function PostPageClient({ post, relatedPosts, categories }: PostPageClientProps) {
+export default function PostPageClient({ post, relatedPosts, categories, processedContent }: PostPageClientProps) {
   const [sidebarFixed, setSidebarFixed] = useState(true);
-  const [processedContent, setProcessedContent] = useState<string>('');
-
-  useEffect(() => {
-    // 处理文章内容，使用marked进行markdown解析
-    const processContent = async () => {
-      if (post.content) {
-        // 配置marked选项，启用所有markdown功能
-        marked.setOptions({
-          breaks: true, // 支持换行符转换为<br>
-          gfm: true, // 启用GitHub风格的markdown
-        });
-        
-        const htmlContent = await marked(post.content);
-        setProcessedContent(htmlContent);
-      }
-    };
-
-    processContent();
-  }, [post.content]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -171,7 +152,7 @@ export default function PostPageClient({ post, relatedPosts, categories }: PostP
 
                 <div 
                   className={styles.content}
-                  dangerouslySetInnerHTML={{ __html: processedContent }}
+                  dangerouslySetInnerHTML={{ __html: processedContent || '' }}
                 />
               </div>
             </article>

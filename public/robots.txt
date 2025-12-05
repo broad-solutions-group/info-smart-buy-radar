@@ -21,3 +21,4 @@ Allow: /terms
 # Sitemap location
 Sitemap: https://smartshoppingradar.com/sitemap.xml
 
+
