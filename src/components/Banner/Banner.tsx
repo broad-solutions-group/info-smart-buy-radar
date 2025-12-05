@@ -147,8 +147,12 @@ export default function Banner({ featuredPosts }: BannerProps) {
                     <h2 className={styles.slideTitle}>{post.title}</h2>
                     <p className={styles.slideDescription}>{post.description}</p>
                     <div className={styles.slideActions}>
-                      <a href={`/post/${post.slug}`} className={styles.readMoreBtn}>
+                      <a 
+                        href={`/post/${post.slug}`} 
+                        className={styles.readMoreBtn}
+                      >
                         Read More
+                        <span className={styles.srOnly}> about {post.title}</span>
                       </a>
                       <span className={styles.duration}>{post.duration} read</span>
                     </div>
