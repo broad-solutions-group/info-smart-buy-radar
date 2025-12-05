@@ -41,6 +41,8 @@ export default function PostCard({ post, variant = 'default' }: PostCardProps) {
             alt={post.title}
             fill
             className={styles.postImage}
+            loading="lazy"
+            fetchPriority="low"
           />
           <div className={styles.categoryBadge}>
             <span 

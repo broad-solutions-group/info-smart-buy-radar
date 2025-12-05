@@ -132,6 +132,8 @@ export default function Banner({ featuredPosts }: BannerProps) {
                   fill
                   className={styles.slideImage}
                   priority={index === 0}
+                  loading={index === 0 ? undefined : 'lazy'}
+                  fetchPriority={index === 0 ? 'high' : 'low'}
                 />
                 <div className={styles.overlay} />
               </div>

@@ -137,7 +137,7 @@ export default async function HomePage() {
 
         <div id="seattle-ad-10001" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
           <div style={{marginBottom: '0.2rem'}} className="adTip">Advertisement ▼</div>
-          <Image src={adsPlaceholderImg} alt="Advertisement" />
+          <Image src={adsPlaceholderImg} alt="Advertisement" loading="lazy" fetchPriority="low" />
           <div style={{marginTop: '0.2rem'}} className="adTip">Advertisement ▲</div>
         </div>
 

@@ -144,6 +144,8 @@ export default function Header({ categories, currentCategory }: HeaderProps) {
                 width={38}
                 height={38}
                 className={styles.logoIcon}
+                priority
+                fetchPriority="high"
               />
             </a>
             <a href="/">

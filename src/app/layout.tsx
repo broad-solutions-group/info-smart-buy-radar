@@ -4,7 +4,11 @@ import "./globals.css";
 import Providers from '../components/Providers';
 import { siteData } from '../lib/api';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+});
 
 export const metadata: Metadata = {
   title: "Smart Buy Radar - Your Guide to Smart Shopping",
@@ -33,6 +37,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* 预连接重要源 - 建立早期连接以提升性能 */}
+        <link rel="preconnect" href="https://cdn-info.broadsolutionsgroup.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://info-domainconfig.cloudinfinitedata.com" crossOrigin="anonymous" />
+        {/* DNS 预解析其他源 */}
+        <link rel="dns-prefetch" href="https://sdk.broadsolutionsgroup.com" />
+        {/* 预加载关键资源 */}
+        <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" />
+        {/* SDK 脚本保持原样 */}
         <script src="https://sdk.broadsolutionsgroup.com/perfect_sdk_info_mixed.js" async></script>
       </head>
       <body className={inter.className}>
