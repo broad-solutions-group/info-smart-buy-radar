@@ -1,16 +1,15 @@
-import { getPostsByCategory, getCategorySlug, getCategories } from '@/lib/api';
-import { Post, Category } from '@/lib/slices/postsSlice';
+import {getCategories, getPostsByCategory} from '@/lib/api';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import PostCard from '@/components/PostCard/PostCard';
 import styles from './CategoryPage.module.css';
-import AdPlaceholder from '@/components/AdPlaceholder/AdPlaceholder';
 import adsPlaceholderImg from '../../ads_300_250.png';
+import Image from 'next/image';
 
 // 生成静态参数
 export async function generateStaticParams() {
   const categories = await getCategories();
-  
+
   return categories.map((category) => ({
     category: category.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, ''),
   }));
@@ -26,7 +25,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const categorySlug = params.category;
   const posts = await getPostsByCategory(categorySlug);
   const categories = await getCategories();
-  
+
   let categoryName = '';
   if (posts.length > 0) {
     categoryName = posts[0].categoryName;
@@ -41,13 +40,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <p>Sorry, we couldn&apos;t find any articles in this category.</p>
           <a href="/" className={styles.backHome}>← Back to Home</a>
         </div>
-        <AdPlaceholder 
-          id="seattle-ad-10001"
-          imageSrc={adsPlaceholderImg}
-          alt="Advertisement"
-          width={300}
-          height={250}
-        />
+        <div id="seattle-ad-10001" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+          <div style={{marginBottom: '0.2rem'}} className="adTip">Advertisement ▼</div>
+          <Image src={adsPlaceholderImg} alt="Advertisement" />
+          <div style={{marginTop: '0.2rem'}} className="adTip">Advertisement ▲</div>
+        </div>
         <Footer />
       </>
     );
@@ -71,22 +68,19 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </p>
           </header>
 
-          {/* 广告位 - 使用组件化设计 */}
-          <AdPlaceholder 
-            id="seattle-ad-10001"
-            imageSrc={adsPlaceholderImg}
-            alt="Advertisement"
-            width={300}
-            height={250}
-          />
+          <div id="seattle-ad-10001" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+            <div style={{marginBottom: '0.2rem'}} className="adTip">Advertisement ▼</div>
+            <Image src={adsPlaceholderImg} alt="Advertisement" />
+            <div style={{marginTop: '0.2rem'}} className="adTip">Advertisement ▲</div>
+          </div>
 
           {/* Articles Grid */}
           <section className={styles.articlesSection}>
             <div className={styles.articlesGrid}>
               {posts.map((post) => (
-                <PostCard 
-                  key={post.id} 
-                  post={post} 
+                <PostCard
+                  key={post.id}
+                  post={post}
                   variant="default"
                 />
               ))}
@@ -97,4 +91,4 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <Footer />
     </>
   );
-} 
+}

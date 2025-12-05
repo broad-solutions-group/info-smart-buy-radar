@@ -1,15 +1,12 @@
 import { getAllPosts, getCategories } from '@/lib/api';
-import { Post, Category } from '@/lib/slices/postsSlice';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import Banner from '@/components/Banner/Banner';
-import AdBanner from '@/components/AdBanner/AdBanner';
 import PostCard from '@/components/PostCard/PostCard';
 import styles from './Home.module.css';
-import ClientEffects from '@/components/ClientEffects/ClientEffects';
-import AdPlaceholder from '@/components/AdPlaceholder/AdPlaceholder';
 import adsPlaceholderImg from './ads_300_250.png';
 import SearchForm from '@/components/SearchForm/SearchForm';
+import Image from "next/image";
 
 export default async function HomePage() {
   // 在服务端获取数据，构建时生成静态 HTML
@@ -18,25 +15,25 @@ export default async function HomePage() {
 
   // 收集所有已在其他模块中显示的文章ID，避免重复
   const usedPostIds = new Set<number>();
-  
+
   // 先收集分类展示会用到的文章ID
   const categoryDisplayIds = new Set<number>();
   categories.forEach(category => {
     const categoryPosts = posts.filter(post => post.categoryName === category.name);
     categoryPosts.slice(0, 3).forEach(post => categoryDisplayIds.add(post.id));
   });
-  
+
   // Get banner posts - 轮播专用文章（每个分类选1篇，总共4篇）
   const getBannerPosts = () => {
     const bannerPosts: typeof posts = [];
-    
+
     // 首先添加指定的文章到第一个位置
     const targetPost = posts.find(post => post.id === 107);
     if (targetPost) {
       bannerPosts.push(targetPost);
       usedPostIds.add(targetPost.id);
     }
-    
+
     // 从每个分类的第4篇开始选择（避免与分类展示重复和已选择的文章重复）
     categories.forEach(category => {
       const categoryPosts = posts.filter(post => post.categoryName === category.name);
@@ -49,16 +46,16 @@ export default async function HomePage() {
         }
       }
     });
-    
+
     return bannerPosts;
   };
-  
+
   const bannerPosts = getBannerPosts();
-  
+
   // Get featured posts - Featured Articles专用文章（6篇，避免与轮播和分类展示重复）
   const getFeaturedPosts = (count: number) => {
     const featuredPosts: typeof posts = [];
-    
+
     // 从每个分类的第5篇开始选择（避免与轮播和分类展示重复）
     categories.forEach(category => {
       const categoryPosts = posts.filter(post => post.categoryName === category.name);
@@ -71,22 +68,22 @@ export default async function HomePage() {
         }
       }
     });
-    
+
     // 如果还需要更多文章，从剩余文章中选择（排除已使用和分类展示的文章）
     if (featuredPosts.length < count) {
-      const remainingPosts = posts.filter(post => 
+      const remainingPosts = posts.filter(post =>
         !usedPostIds.has(post.id) && !categoryDisplayIds.has(post.id)
       );
       const needed = count - featuredPosts.length;
       featuredPosts.push(...remainingPosts.slice(0, needed));
       remainingPosts.slice(0, needed).forEach(post => usedPostIds.add(post.id));
     }
-    
+
     return featuredPosts;
   };
-  
+
   const featuredPosts = getFeaturedPosts(6);
-  
+
   // Get diverse posts for "For You" section (exclude featured posts and category display posts)
   const getDiversePosts = (count: number) => {
     // 排除已使用的文章和分类展示的前3篇
@@ -95,15 +92,15 @@ export default async function HomePage() {
       const categoryPosts = posts.filter(post => post.categoryName === category.name);
       categoryPosts.slice(0, 3).forEach(post => categoryDisplayIds.add(post.id));
     });
-    
-    const availablePosts = posts.filter(post => 
+
+    const availablePosts = posts.filter(post =>
       !usedPostIds.has(post.id) && !categoryDisplayIds.has(post.id)
     );
-    
+
     // 使用确定性方法选择多样化的文章
     const diversePosts: typeof posts = [];
     const categoriesUsed = new Set<string>();
-    
+
     // 首先尝试从不同分类中各选一篇
     for (const post of availablePosts) {
       if (!categoriesUsed.has(post.categoryName) && diversePosts.length < count) {
@@ -112,7 +109,7 @@ export default async function HomePage() {
         usedPostIds.add(post.id);
       }
     }
-    
+
     // 如果还需要更多文章，按顺序添加剩余文章
     if (diversePosts.length < count) {
       const remaining = availablePosts.filter(post => !diversePosts.includes(post));
@@ -120,12 +117,12 @@ export default async function HomePage() {
       diversePosts.push(...remaining.slice(0, needed));
       remaining.slice(0, needed).forEach(post => usedPostIds.add(post.id));
     }
-    
+
     return diversePosts;
   };
-  
+
   const forYouPosts = getDiversePosts(6);
-  
+
   // Get posts by category for sections (前3篇文章)
   const getPostsByCategory = (categoryName: string, limit: number = 3) => {
     return posts.filter(post => post.categoryName === categoryName).slice(0, limit);
@@ -133,22 +130,16 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* 客户端副作用组件 */}
-      <ClientEffects />
-      
       <Header categories={categories} />
       <main className={styles.main}>
         {/* Hero Banner */}
         <Banner featuredPosts={bannerPosts} />
 
-        {/* 广告位 - 使用组件化设计 */}
-        <AdPlaceholder 
-          id="seattle-ad-10001"
-          imageSrc={adsPlaceholderImg}
-          alt="Advertisement"
-          width={300}
-          height={250}
-        />
+        <div id="seattle-ad-10001" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+          <div style={{marginBottom: '0.2rem'}} className="adTip">Advertisement ▼</div>
+          <Image src={adsPlaceholderImg} alt="Advertisement" />
+          <div style={{marginTop: '0.2rem'}} className="adTip">Advertisement ▲</div>
+        </div>
 
         {/* Featured Articles Section */}
         <section className={styles.section}>
@@ -156,24 +147,15 @@ export default async function HomePage() {
             <h2 className={styles.sectionTitle}>Featured Articles</h2>
             <div className={styles.featuredGrid}>
               {featuredPosts.map((post) => (
-                <PostCard 
-                  key={post.id} 
-                  post={post} 
+                <PostCard
+                  key={post.id}
+                  post={post}
                   variant="featured"
                 />
               ))}
             </div>
           </div>
         </section>
-
-        {/* 广告位 - 使用组件化设计 */}
-        <AdPlaceholder 
-          id="seattle-ad-10002"
-          imageSrc={adsPlaceholderImg}
-          alt="Advertisement"
-          width={300}
-          height={250}
-        />
 
         {/* For You Section */}
         <section className={styles.section}>
@@ -181,24 +163,15 @@ export default async function HomePage() {
             <h2 className={styles.sectionTitle}>For You</h2>
             <div className={styles.featuredGrid}>
               {forYouPosts.map((post) => (
-                <PostCard 
-                  key={post.id} 
-                  post={post} 
+                <PostCard
+                  key={post.id}
+                  post={post}
                   variant="featured"
                 />
               ))}
             </div>
           </div>
         </section>
-
-        {/* 广告位 - 使用组件化设计 */}
-        <AdPlaceholder 
-          id="seattle-ad-10003"
-          imageSrc={adsPlaceholderImg}
-          alt="Advertisement"
-          width={300}
-          height={250}
-        />
 
         {/* Categories Sections */}
         {(() => {
@@ -238,21 +211,6 @@ export default async function HomePage() {
                 </section>
               </div>
             );
-
-            // 如果渲染的分类板块数量是2的倍数，则插入广告
-            if (renderedCategoryCount % 2 === 0) {
-              elements.push(
-                <AdPlaceholder
-                  key={`ad-${adIdCounter}`}
-                  id={`seattle-ad-1000${adIdCounter}`}
-                  imageSrc={adsPlaceholderImg}
-                  alt="Advertisement"
-                  width={300}
-                  height={250}
-                />
-              );
-              adIdCounter++; // 递增广告ID后缀
-            }
           });
           return elements;
         })()}

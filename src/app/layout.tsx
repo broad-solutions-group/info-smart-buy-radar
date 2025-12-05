@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from '../components/Providers';
-import AppLoader from '../components/AppLoader/AppLoader';
 import { siteData } from '../lib/api';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -33,11 +32,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script src="https://sdk.broadsolutionsgroup.com/perfect_sdk_info_mixed.js" async></script>
+      </head>
       <body className={inter.className}>
         <Providers>
-          <AppLoader>
           {children}
-          </AppLoader>
         </Providers>
       </body>
     </html>

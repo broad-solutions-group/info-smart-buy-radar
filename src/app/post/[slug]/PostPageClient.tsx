@@ -7,9 +7,7 @@ import { getCategorySlug } from '@/lib/api';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import RecommendationSidebar from '@/components/RecommendationSidebar/RecommendationSidebar';
-import AdBanner from '@/components/AdBanner/AdBanner';
 import styles from './PostPage.module.css';
-import AdPlaceholder from '@/components/AdPlaceholder/AdPlaceholder';
 import adsPlaceholderImg from '../../ads_300_250.png';
 
 interface PostPageClientProps {
@@ -33,20 +31,20 @@ export default function PostPageClient({ post, relatedPosts, categories, process
       const footer = document.querySelector('footer');
       const sidebar = document.querySelector('aside');
       const main = document.querySelector('main');
-      
+
       if (!footer || !sidebar || !main) return;
 
       const footerRect = footer.getBoundingClientRect();
       const sidebarRect = sidebar.getBoundingClientRect();
       const mainRect = main.getBoundingClientRect();
       const windowHeight = window.innerHeight;
-      
+
       // 计算各种距离
       const footerTop = footerRect.top;
       const sidebarBottom = sidebarRect.bottom;
       const mainBottom = mainRect.bottom;
       const scrollY = window.scrollY;
-      
+
       // 更精确的判断逻辑：
       // 1. 当footer即将进入视口时（提前100px开始处理）
       // 2. 当main容器底部接近视口底部时
@@ -54,10 +52,10 @@ export default function PostPageClient({ post, relatedPosts, categories, process
       const footerApproaching = footerTop < windowHeight + 100;
       const mainNearEnd = mainBottom < windowHeight + 50;
       const sidebarWouldOverlap = sidebarBottom > footerTop - 40;
-      
+
       // 只有当footer真正接近且可能发生重叠时才取消固定
       const shouldUnfix = footerApproaching && (mainNearEnd || sidebarWouldOverlap);
-      
+
       setSidebarFixed(!shouldUnfix);
     };
 
@@ -110,10 +108,10 @@ export default function PostPageClient({ post, relatedPosts, categories, process
 
                 <header className={styles.articleHeader}>
                   <h1 className={styles.title}>{post.title}</h1>
-                  
+
                   <div className={styles.meta}>
                     <div className={styles.metaLeft}>
-                      <a 
+                      <a
                         href={`/category/${getCategorySlug(post.categoryName)}`}
                         className={styles.categoryBadge}
                       >
@@ -125,14 +123,11 @@ export default function PostPageClient({ post, relatedPosts, categories, process
                   </div>
                 </header>
 
-                {/* 广告位 - 使用组件化设计 */}
-                <AdPlaceholder 
-                  id="seattle-ad-10001"
-                  imageSrc={adsPlaceholderImg}
-                  alt="Advertisement"
-                  width={300}
-                  height={250}
-                />
+                <div id="seattle-ad-10001" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+                  <div style={{marginBottom: '0.2rem'}} className="adTip">Advertisement ▼</div>
+                  <Image src={adsPlaceholderImg} alt="Advertisement" />
+                  <div style={{marginTop: '0.2rem'}} className="adTip">Advertisement ▲</div>
+                </div>
 
                 <div className={styles.description}>
                   <p>{post.description}</p>
@@ -150,14 +145,14 @@ export default function PostPageClient({ post, relatedPosts, categories, process
                   </div>
                 )}
 
-                <div 
+                <div
                   className={styles.content}
                   dangerouslySetInnerHTML={{ __html: processedContent || '' }}
                 />
               </div>
             </article>
 
-            <RecommendationSidebar 
+            <RecommendationSidebar
               currentPost={post}
               relatedPosts={relatedPosts}
               categories={categories}
@@ -169,4 +164,4 @@ export default function PostPageClient({ post, relatedPosts, categories, process
       <Footer />
     </>
   );
-} 
+}

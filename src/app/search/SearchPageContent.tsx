@@ -7,10 +7,9 @@ import { Post, Category } from '@/lib/slices/postsSlice';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import PostCard from '@/components/PostCard/PostCard';
-import AdBanner from '@/components/AdBanner/AdBanner';
 import styles from './SearchPage.module.css';
-import AdPlaceholder from '@/components/AdPlaceholder/AdPlaceholder';
 import adsPlaceholderImg from '../ads_300_250.png';
+import Image from "next/image";
 
 export default function SearchPageContent() {
   const searchParams = useSearchParams();
@@ -55,15 +54,15 @@ export default function SearchPageContent() {
 
     setLoading(true);
     setHasSearched(true);
-    
+
     try {
       // 添加最小延迟，确保用户能看到加载状态
       const startTime = Date.now();
       const results = await searchPosts(query.trim());
-      
+
       const elapsed = Date.now() - startTime;
       const minDelay = 300; // 最小300ms延迟
-      
+
       if (elapsed < minDelay) {
         setTimeout(() => {
           setSearchResults(results);
@@ -83,7 +82,7 @@ export default function SearchPageContent() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     performSearch(searchQuery);
-    
+
     // Update URL with search query
     const url = new URL(window.location.href);
     if (searchQuery.trim()) {
@@ -107,7 +106,7 @@ export default function SearchPageContent() {
           <header className={styles.searchHeader}>
             <h1 className={styles.title}>Search Articles</h1>
             <p className={styles.subtitle}>Find the perfect shopping advice for your needs</p>
-            
+
             <form onSubmit={handleSearch} className={styles.searchForm}>
               <div className={styles.searchInputContainer}>
                 <input
@@ -125,15 +124,12 @@ export default function SearchPageContent() {
                 </button>
               </div>
             </form>
-            
-            {/* 广告位 - 使用组件化设计 */}
-            <AdPlaceholder 
-              id="seattle-ad-10001"
-              imageSrc={adsPlaceholderImg}
-              alt="Advertisement"
-              width={300}
-              height={250}
-            />
+
+            <div id="seattle-ad-10001" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
+              <div style={{marginBottom: '0.2rem'}} className="adTip">Advertisement ▼</div>
+              <Image src={adsPlaceholderImg} alt="Advertisement" />
+              <div style={{marginTop: '0.2rem'}} className="adTip">Advertisement ▲</div>
+            </div>
           </header>
 
           {/* Loading State */}
@@ -166,9 +162,9 @@ export default function SearchPageContent() {
               {searchResults.length > 0 && (
                 <div className={styles.resultsGrid}>
                   {searchResults.map((post) => (
-                    <PostCard 
-                      key={post.id} 
-                      post={post} 
+                    <PostCard
+                      key={post.id}
+                      post={post}
                       variant="default"
                     />
                   ))}
@@ -198,7 +194,7 @@ export default function SearchPageContent() {
               <h2 className={styles.categoriesTitle}>Browse by Category</h2>
               <div className={styles.categoriesGrid}>
                 {categories.map((category) => (
-                  <a 
+                  <a
                     key={category.id}
                     href={`/category/${category.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')}`}
                     className={styles.categoryCard}
@@ -215,4 +211,4 @@ export default function SearchPageContent() {
       <Footer />
     </>
   );
-} 
+}
