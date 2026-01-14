@@ -4,7 +4,7 @@ import "./globals.css";
 import Providers from '../components/Providers';
 import { siteData } from '../lib/api';
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   display: 'swap',
   preload: true,
@@ -45,7 +45,7 @@ export default function RootLayout({
         {/* 预加载关键资源 */}
         <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" />
         {/* SDK 脚本保持原样 */}
-        <script src="https://sdk.broadsolutionsgroup.com/perfect_sdk_info_mixed.js" async></script>
+        <script async src="https://sdk.broadsolutionsgroup.com/BsSDK.js"></script>
       </head>
       <body className={inter.className}>
         <Providers>
