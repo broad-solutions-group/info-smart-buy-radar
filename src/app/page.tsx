@@ -225,6 +225,35 @@ export default async function HomePage() {
           </div>
         </section>
 
+        <div className="ad-container">
+          <div id="seattle-ad-10003" style={{textAlign: 'center', height: '250px'}}>
+            <div id="seattle-ad-10003-placeholder" style={{
+              display: 'flex',
+              width: '300px',
+              height: '250px',
+              margin: '0 auto',
+              border: '1px solid #ccc',
+              backgroundColor: '#f0f0f0',
+              boxSizing: 'border-box',
+              position: 'relative',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '30px',
+              color: '#999',
+            }}>Advertisement
+            </div>
+            <div id="seattle-ad-10003-content" style={{
+              width: '300px',
+              height: '250px',
+              margin: '0 auto',
+              position: 'relative',
+              top: '-250px',
+              zIndex: 10,
+              visibility: 'hidden',
+            }}></div>
+          </div>
+        </div>
+
         {/* Categories Sections */}
         {(() => {
           const elements: JSX.Element[] = [];

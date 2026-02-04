@@ -41,8 +41,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <a href="/" className={styles.backHome}>← Back to Home</a>
         </div>
         <div className="ad-container">
-          <div id="seattle-ad-10003" style={{textAlign: 'center', height: '250px'}}>
-            <div id="seattle-ad-10003-placeholder" style={{
+          <div id="seattle-ad-10004" style={{textAlign: 'center', height: '250px'}}>
+            <div id="seattle-ad-10004-placeholder" style={{
               display: 'flex',
               width: '300px',
               height: '250px',
@@ -57,7 +57,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               color: '#999',
             }}>Advertisement
             </div>
-            <div id="seattle-ad-10003-content" style={{
+            <div id="seattle-ad-10004-content" style={{
               width: '300px',
               height: '250px',
               margin: '0 auto',
@@ -92,8 +92,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </header>
 
           <div className="ad-container">
-            <div id="seattle-ad-10003" style={{textAlign: 'center', height: '250px'}}>
-              <div id="seattle-ad-10003-placeholder" style={{
+            <div id="seattle-ad-10004" style={{textAlign: 'center', height: '250px'}}>
+              <div id="seattle-ad-10004-placeholder" style={{
                 display: 'flex',
                 width: '300px',
                 height: '250px',
@@ -108,7 +108,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 color: '#999',
               }}>Advertisement
               </div>
-              <div id="seattle-ad-10003-content" style={{
+              <div id="seattle-ad-10004-content" style={{
                 width: '300px',
                 height: '250px',
                 margin: '0 auto',

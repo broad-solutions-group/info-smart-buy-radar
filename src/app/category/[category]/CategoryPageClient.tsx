@@ -30,10 +30,33 @@ export default function CategoryPageClient({
           <p>Sorry, we couldn&apos;t find any articles in this category.</p>
           <a href="/" className={styles.backHome}>← Back to Home</a>
         </div>
-          <div id="seattle-ad-10001" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center'}}>
-              <div style={{marginBottom: '0.2rem'}} className="adTip">Advertisement ▼</div>
-              <Image src={adsPlaceholderImg} alt="Advertisement" />
-              <div style={{marginTop: '0.2rem'}} className="adTip">Advertisement ▲</div>
+          <div className="ad-container">
+              <div id="seattle-ad-10004" style={{textAlign: 'center', height: '250px'}}>
+                  <div id="seattle-ad-10004-placeholder" style={{
+                      display: 'flex',
+                      width: '300px',
+                      height: '250px',
+                      margin: '0 auto',
+                      border: '1px solid #ccc',
+                      backgroundColor: '#f0f0f0',
+                      boxSizing: 'border-box',
+                      position: 'relative',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '30px',
+                      color: '#999',
+                  }}>Advertisement
+                  </div>
+                  <div id="seattle-ad-10004-content" style={{
+                      width: '300px',
+                      height: '250px',
+                      margin: '0 auto',
+                      position: 'relative',
+                      top: '-250px',
+                      zIndex: 10,
+                      visibility: 'hidden',
+                  }}></div>
+              </div>
           </div>
         <Footer />
       </>
